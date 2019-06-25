@@ -1,14 +1,20 @@
 package in.co.arcus.texvalley;
 
 
+        import android.annotation.SuppressLint;
         import android.app.AlertDialog;
         import android.content.Context;
+        import android.content.DialogInterface;
         import android.content.Intent;
+        import android.content.SharedPreferences;
+        import android.os.Build;
         import android.os.Bundle;
 
         import android.os.Handler;
+        import android.support.annotation.RequiresApi;
         import android.support.design.widget.NavigationView;
 
+        import android.support.v4.app.FragmentManager;
         import android.support.v4.view.GravityCompat;
         import android.support.v4.widget.DrawerLayout;
         import android.support.v7.app.ActionBarDrawerToggle;
@@ -23,6 +29,7 @@ package in.co.arcus.texvalley;
         import android.widget.AdapterView;
         import android.widget.ArrayAdapter;
         import android.widget.DatePicker;
+        import android.widget.FrameLayout;
         import android.widget.ImageView;
         import android.widget.ListView;
         import android.widget.RelativeLayout;
@@ -40,35 +47,41 @@ package in.co.arcus.texvalley;
 
 public class dashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-
+    private static final int TIME_INTERVAL = 2000; // # milliseconds, desired time passed between two back presses.
+    private long mBackPressed;
     private ActionBarDrawerToggle mtoggle;
     TextView mtextheading;
     private DrawerLayout mdrawer;
-     JSONArray objectsfordash;
+    JSONArray objectsfordash;
     dashboardAdapter listAdaptor;
     int listItemsValue;
     TextView datepickerremainder;
     AlertDialog alertDialog;
     View dialogviews;
-
+    public static String userroleid;
+    public static String userid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard);
-        RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.hideshow);
+
+        Intent intent = getIntent();
+        userroleid = intent.getStringExtra("role_id");
+        userid = intent.getStringExtra("user_id");
+
+        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.hideshow);
         relativeLayout.setVisibility(View.INVISIBLE);
 
-        datepickerremainder = (TextView)findViewById(R.id.setdateactions);
-        dialogviews = View.inflate(dashboard.this,R.layout.datepicker,null);
+
+        datepickerremainder = (TextView) findViewById(R.id.setdateactions);
+        dialogviews = View.inflate(dashboard.this, R.layout.datepicker, null);
 
 
-
-
-        ListView mlistviewssettingfordash =(ListView)findViewById(R.id.listfordashboard);
-        mtextheading = (TextView)findViewById(R.id.list_heading);
-        mdrawer = (DrawerLayout)findViewById(R.id.drawer_action);
-        mtoggle = new ActionBarDrawerToggle(this,mdrawer,R.string.open,R.string.close);
+        ListView mlistviewssettingfordash = (ListView) findViewById(R.id.listfordashboard);
+        mtextheading = (TextView) findViewById(R.id.list_heading);
+        mdrawer = (DrawerLayout) findViewById(R.id.drawer_action);
+        mtoggle = new ActionBarDrawerToggle(this, mdrawer, R.string.open, R.string.close);
         mdrawer.addDrawerListener(mtoggle);
         mtoggle.syncState();
         NavigationView navigationView = findViewById(R.id.nav_bar);
@@ -82,60 +95,54 @@ public class dashboard extends AppCompatActivity implements NavigationView.OnNav
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-            getMenuInflater().inflate(R.menu.dateaction,menu);
+        getMenuInflater().inflate(R.menu.dateaction, menu);
         return true;
     }
 
 
-
-
-
-
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
-           /* final int itemid = item.getItemId();*/
+        /* final int itemid = item.getItemId();*/
 
 
-           this.findViewById(R.id.setdateactions).setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View v) {
-                   alertDialog.show();
+        this.findViewById(R.id.setdateactions).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.show();
 
-               }
-           });
+            }
+        });
 
-            alertDialog = new AlertDialog.Builder(this).create();
-            dialogviews.findViewById(R.id.date_time_picker).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    DatePicker datePicker = (DatePicker) dialogviews.findViewById(R.id.date_picker);
+        alertDialog = new AlertDialog.Builder(this).create();
+        dialogviews.findViewById(R.id.date_time_picker).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePicker datePicker = (DatePicker) dialogviews.findViewById(R.id.date_picker);
 
-                    String dateset = datePicker.getYear() +"-" + (datePicker.getMonth()+1) + "-" + datePicker.getDayOfMonth();
+                String dateset = datePicker.getYear() + "-" + (datePicker.getMonth() + 1) + "-" + datePicker.getDayOfMonth();
 
-                    item.setTitle(dateset);
-                    getBackEndtitledate(dateset);
-                    alertDialog.dismiss();
-                }
-            });
-            alertDialog.setView(dialogviews);
-
-
+                item.setTitle(dateset);
+                getBackEndtitledate(dateset, "role_id", userroleid, "user_id", userid);
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.setView(dialogviews);
 
 
-        if(mtoggle.onOptionsItemSelected(item)){
+        if (mtoggle.onOptionsItemSelected(item)) {
             return true;
         }
         return true;
     }
 
 
-
-
-    private void getBackEndtitledate(String datetitlevalues) {
+    private void getBackEndtitledate(String datetitlevalues, String role_id, String userroleid, String user_id, String userid) {
 
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("date", datetitlevalues);
+            jsonObject.put("role_id", userroleid);
+            jsonObject.put("user_id", userid);
             String url = "http://texvalley.arcus.co.in/texvalleyapp/datetitle.php";
             HashMap<String, Object> params = new HashMap<String, Object>();
             params.put("url", url);
@@ -153,7 +160,7 @@ public class dashboard extends AppCompatActivity implements NavigationView.OnNav
                 public void onPostExecutemetod(String response) throws JSONException {
                     System.out.println("the status date  is: " + response);
                     /*JSONObject jsonObject = new JSONObject(response);*/
-                setlistadapterfordash(response);
+                    setlistadapterfordash(response);
                     /*getdatetitle(jsonObject);*/
 
                 }
@@ -166,24 +173,21 @@ public class dashboard extends AppCompatActivity implements NavigationView.OnNav
     }
 
 
-
     @Override
-    public boolean onNavigationItemSelected( MenuItem menuItem) {
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
 
 
         int id = menuItem.getItemId();
 
-        if (id == R.id.nav_oppurtunity){
+        if (id == R.id.nav_oppurtunity) {
 
             Intent intent = new Intent(dashboard.this, oppurtunity.class);
-            dashboard.this.finish();
+            intent.putExtra("user_id",userid);
+            intent.putExtra("role_id",userroleid);
             startActivity(intent);
 
-        }
-
-
-        else if (id == R.id.nav_personlogout){
-            Intent intent = new Intent(this,MainActivity.class);
+        } else if (id == R.id.nav_personlogout) {
+            Intent intent = new Intent(this, MainActivity.class);
             this.finish();
             startActivity(intent);
         }
@@ -194,27 +198,28 @@ public class dashboard extends AppCompatActivity implements NavigationView.OnNav
 
     }
 
-    public  void  getBackendlistview(){
-        String url ="http://texvalley.arcus.co.in/texvalleyapp/dashboard_listview.php";
-        HashMap<String,Object> params =  new HashMap<String,Object>();
-        params.put("url",url);
-        params.put("requestmethod","GET");
+    public void getBackendlistview() {
+        String url = "http://texvalley.arcus.co.in/texvalleyapp/dashboard_listview.php?user_id=" + dashboard.userid + "&role_id=" + dashboard.userroleid;
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put("url", url);
+        params.put("requestmethod", "GET");
         asynctask listviewfordash = new asynctask(params);
-        listviewfordash.setListener(new asynctask.MyListener(){
+        listviewfordash.setListener(new asynctask.MyListener() {
             @Override
             public void onpreExecutemethod() {
 
             }
 
             @Override
-            public void onPostExecutemetod(String response)throws JSONException {
-                System.out.println("Post Execute"+response.toString());
+            public void onPostExecutemetod(String response) throws JSONException {
+                System.out.println("Post Execute" + response.toString());
                 setlistadapterfordash(response);
             }
         });
         listviewfordash.execute();
     }
-    private  void  setlistadapterfordash(String response) throws JSONException{
+
+    private void setlistadapterfordash(String response) throws JSONException {
 
 
         final JSONObject jsResponse = new JSONObject(response);
@@ -222,11 +227,11 @@ public class dashboard extends AppCompatActivity implements NavigationView.OnNav
 
 
         listAdaptor = new dashboardAdapter(this, R.layout.listviewfordashboard, responseJsArray);
-         final ListView listviewssettingfordash =(ListView)findViewById(R.id.listfordashboard);
+        final ListView listviewssettingfordash = (ListView) findViewById(R.id.listfordashboard);
         listviewssettingfordash.setAdapter(listAdaptor);
 
 
-        if(responseJsArray.length() != 0){
+        if (responseJsArray.length() != 0) {
 
 
             listviewssettingfordash.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -250,8 +255,8 @@ public class dashboard extends AppCompatActivity implements NavigationView.OnNav
                             listviewssettingfordash,
                             new SwipeListViewTouchListener.OnSwipeCallback() {
                                 @Override
-                                public void onSwipeLeft(ListView listView, int [] reverseSortedPositions) {
-                                    Log.i(this.getClass().getName(), "swipe left : pos="+reverseSortedPositions[0]);
+                                public void onSwipeLeft(ListView listView, int[] reverseSortedPositions) {
+                                    Log.i(this.getClass().getName(), "swipe left : pos=" + reverseSortedPositions[0]);
                                     // TODO : YOUR CODE HERE FOR LEFT ACTION
                                     try {
 
@@ -264,8 +269,8 @@ public class dashboard extends AppCompatActivity implements NavigationView.OnNav
                                 }
 
                                 @Override
-                                public void onSwipeRight(ListView listView, int [] reverseSortedPositions) {
-                                    Log.i(dashboard.class.getClass().getName(), "swipe right : pos="+reverseSortedPositions[0]);
+                                public void onSwipeRight(ListView listView, int[] reverseSortedPositions) {
+                                    Log.i(dashboard.class.getClass().getName(), "swipe right : pos=" + reverseSortedPositions[0]);
                                     // TODO : YOUR CODE HERE FOR RIGHT ACTION
                                     try {
 
@@ -286,44 +291,65 @@ public class dashboard extends AppCompatActivity implements NavigationView.OnNav
 // we don't look for swipes.
             listviewssettingfordash.setOnScrollListener(touchListener.makeScrollListener());
 
-            RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.hideshow);
+            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.hideshow);
             relativeLayout.setVisibility(View.INVISIBLE);
 
-        }
-        else {
-            RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.hideshow);
+        } else {
+            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.hideshow);
             relativeLayout.setVisibility(View.VISIBLE);
         }
 
     }
 
 
-    public void oppurtunitiesfollowupfrdash(String listviewid)  {
+    public void oppurtunitiesfollowupfrdash(String listviewid) {
 
-        Intent intent = new Intent(dashboard.this,Tabsactivity2.class);
-        intent.putExtra("id",listviewid);
+        Intent intent = new Intent(dashboard.this, Tabsactivity2.class);
+        intent.putExtra("id", listviewid);
         startActivity(intent);
 
     }
 
-    boolean doubleBackToExitPressedOnce = false;
+    private static final long delay = 2000L;
+    private boolean mRecentlyBackPressed = false;
+    private Handler mExitHandler = new Handler();
+    private Runnable mExitRunnable = new Runnable() {
+
+        @Override
+        public void run() {
+            mRecentlyBackPressed = false;
+        }
+    };
+
     @Override
     public void onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
+        FragmentManager manager = getSupportFragmentManager();
+
+        if (manager.getBackStackEntryCount() > 1) {
+            // If there are back-stack entries, leave the FragmentActivity
+            // implementation take care of them.
+            manager.popBackStack();
+
+        } else {
+            // Otherwise, ask user if he wants to leave :)
+            new AlertDialog.Builder(this)
+                    .setMessage("Are you sure you want to exit?")
+                    .setNegativeButton(android.R.string.no, null)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+
+                        public void onClick(DialogInterface arg0, int arg1) {
+
+                            System.out.println("thge kill values");
+
+                            finish();
+                            moveTaskToBack(true);
+
+                        }
+                    }).create().show();
         }
-
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
-
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce=false;
-            }
-        }, 2000);
     }
+
 
 
 }

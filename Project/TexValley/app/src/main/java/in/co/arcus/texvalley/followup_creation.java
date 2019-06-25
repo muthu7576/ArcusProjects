@@ -124,7 +124,7 @@ public class followup_creation extends Fragment {
             @Override
             public void onClick(View v) {
                 getfollowupdata();
-                String url = "http://texvalley.arcus.co.in/texvalleyapp/oppurtunity_creationdatabase.php";
+                String url = "http://texvalley.arcus.co.in/texvalleyapp/oppurtunity_creationdatabase.php?user_id="+dashboard.userid;
                 HashMap<String, Object> params = new HashMap<String, Object>();
                 params.put("url", url);
                 params.put("requestmethod", "POST");

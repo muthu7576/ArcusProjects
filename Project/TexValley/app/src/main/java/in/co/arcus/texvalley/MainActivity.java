@@ -1,6 +1,8 @@
 package in.co.arcus.texvalley;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.PersistableBundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -12,11 +14,14 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.HashMap;
+
+
 
 public class MainActivity extends AppCompatActivity {
     EditText mlogin_user, mlogin_pwd;
-
+    public static boolean isKill = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +29,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mlogin_user = (EditText) findViewById(R.id.login_user);
         mlogin_pwd = (EditText) findViewById(R.id.login_pwd);
+
+
+        isKill = false;
+
+
 
     }
 
@@ -59,14 +69,14 @@ public class MainActivity extends AppCompatActivity {
     private void checkinglogin(JSONObject result) throws JSONException {
         if ((result.getBoolean("isValid")) == true) {
             Intent intent = new Intent(MainActivity.this, dashboard.class);
-            MainActivity.this.finish();
+            intent.putExtra("role_id",result.getString("role_id"));
+            intent.putExtra("user_id",result.getString("user_id"));
             startActivity(intent);
         } else {
             Toast.makeText(this, "Invalid credentials", Toast.LENGTH_LONG).show();
         }
 
     }
-
 
 
 }

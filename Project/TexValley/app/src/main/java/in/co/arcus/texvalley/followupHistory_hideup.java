@@ -124,7 +124,9 @@ public class followupHistory_hideup extends Fragment {
             @Override
             public void onClick(View v) {
                 getBackendfllwupdate();
-                String url = "http://texvalley.arcus.co.in/texvalleyapp/followup_update.php";
+                String url = "http://texvalley.arcus.co.in/texvalleyapp/followup_update.php?user_id="+dashboard.userid;
+
+                System.out.println("the updated url is:"+url);
                 HashMap<String,Object> params = new HashMap<String, Object>();
                 params.put("url",url);
                 params.put("requestmethod","POST");

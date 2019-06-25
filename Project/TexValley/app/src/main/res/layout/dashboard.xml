@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="TODAY'S OPPORUTNITIES CATCH-UP"
+            android:text="OPPORUTNITIES CATCH-UP"
             android:fontFamily="@font/avenirlight"
             android:textStyle="bold"
             android:textColor="#000"

@@ -75,7 +75,8 @@ public class oppurtunity extends AppCompatActivity {
     startActivity(intent);
 }
     public  void  getBackendlistview(){
-        String url ="http://texvalley.arcus.co.in/texvalleyapp/oppurtunity_listview.php";
+        String url ="http://texvalley.arcus.co.in/texvalleyapp/oppurtunity_listview.php?user_id="+dashboard.userid+"&role_id="+dashboard.userroleid;
+System.out.println("the url listview is "+url);
         HashMap<String,Object> params =  new HashMap<String,Object>();
         params.put("url",url);
         params.put("requestmethod","GET");
