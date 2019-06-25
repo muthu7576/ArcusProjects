@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:scrollbars="horizontal"
+    android:id="@+id/scrollOppurtunityhideup"
+    tools:context=".oppurtunity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/Relative_layout2">
+
+
+        <TextView
+            android:text="Opportunity Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:id="@+id/cus_opptynamehideup"
+            android:textSize="18sp"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/avenirlight"
+            android:textColor="#000"
+            android:textStyle="bold">
+
+        </TextView>
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:id="@+id/editcus_opptynamehideup"
+            android:layout_below="@+id/cus_opptynamehideup"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/avenirlight"
+            android:background="@drawable/textviewunderline"
+            android:padding="7dp"
+            android:textSize="18sp"
+            android:layout_marginTop="15dp">
+        </TextView>
+        <TextView
+            android:text="Expected date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="110dp"
+            android:id="@+id/cus_expctddatehideup"
+            android:textSize="18sp"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/avenirlight"
+            android:textColor="#000"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/date_time_sethideup"
+            android:text="Set Date"
+            android:layout_below="@+id/cus_expctddatehideup"
+            android:layout_height="40dp"
+            android:textColor="#000"
+            android:layout_marginLeft="10dp"
+            android:textSize="18sp"
+            android:fontFamily="@font/avenirlight"
+            android:padding="7dp"
+            android:layout_marginTop="15dp"
+            android:layout_width="300dp"
+            android:background="@drawable/textviewunderline"/>
+        <TextView
+            android:text="Classification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="220dp"
+            android:id="@+id/cus_clssfyide"
+            android:textSize="18sp"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/avenirlight"
+            android:textColor="#000"
+            android:textStyle="bold">
+
+        </TextView>
+        <TextView
+            android:id="@+id/listClassificationshide"
+            android:textColor="#000"
+            android:layout_below="@+id/cus_clssfyide"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:drawableBottom= "@drawable/shapes1"
+            android:textSize="18sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/avenirlight"
+            android:padding="7dp"
+            android:background="@drawable/textviewunderline"/>
+        <TextView
+            android:text="Customer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="320dp"
+            android:id="@+id/cus_namehideup"
+            android:textSize="18sp"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/avenirlight"
+            android:textColor="#000"
+            android:textStyle="bold">
+
+        </TextView>
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="#000"
+            android:id="@+id/editcus_namehideup"
+            android:layout_below="@+id/cus_namehideup"
+            android:drawableBottom= "@drawable/shapes1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/avenirlight"
+            android:padding="7dp"
+            android:background="@drawable/textviewunderline">
+        </TextView>
+        <TextView
+            android:text="Sales Stage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="420dp"
+            android:id="@+id/cus_salesstagehide"
+            android:textSize="18sp"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/avenirlight"
+            android:textColor="#000"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/listStageshideup"
+            android:textColor="#000"
+            android:layout_below="@+id/cus_salesstagehide"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:drawableBottom= "@drawable/shapes1"
+            android:textSize="18sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/avenirlight"
+            android:padding="7dp"
+            android:background="@drawable/textviewunderline"/>
+
+        <TextView
+            android:text="Value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="520dp"
+            android:id="@+id/cus_valuehide"
+            android:textSize="18sp"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/avenirlight"
+            android:textColor="#000"
+            android:textStyle="bold"
+            >
+
+        </TextView>
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:inputType="number"
+            android:textSize="18sp"
+            android:id="@+id/editcus_valuehide"
+            android:layout_below="@+id/cus_valuehide"
+            android:drawableBottom= "@drawable/shapes1"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/avenirlight"
+            android:padding="7dp"
+            android:background="@drawable/textviewunderline">
+        </TextView>
+        <TextView
+            android:text="Related"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="620dp"
+            android:id="@+id/cus_categoryhide"
+            android:textSize="18sp"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/avenirlight"
+            android:textColor="#000"
+            android:textStyle="bold" >
+
+        </TextView>
+
+
+        <TextView
+            android:id="@+id/listCategoryhide"
+            android:textColor="#000"
+            android:layout_below="@+id/cus_categoryhide"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:drawableBottom= "@drawable/shapes1"
+            android:textSize="18sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/avenirlight"
+            android:padding="7dp"
+            android:background="@drawable/textviewunderline"/>
+        <TextView
+            android:text="Assign To"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="720dp"
+            android:id="@+id/cus_followupassgnhide"
+            android:textSize="18sp"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/avenirlight"
+            android:textColor="#000"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/followup_assignhide"
+            android:layout_below="@+id/cus_followupassgnhide"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:drawableBottom= "@drawable/shapes1"
+            android:textSize="18sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:textColor="#000"
+            android:fontFamily="@font/avenirlight"
+            android:padding="7dp"
+            android:background="@drawable/textviewunderline"/>
+        <TextView
+            android:text="Company Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="820dp"
+            android:id="@+id/cus_cmpnynamehide"
+            android:textSize="18sp"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/avenirlight"
+            android:textColor="#000"
+            android:textStyle="bold">
+
+        </TextView>
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:id="@+id/editcus_cmpnynamehide"
+            android:layout_below="@+id/cus_cmpnynamehide"
+            android:drawableBottom= "@drawable/shapes1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/avenirlight"
+            android:padding="7dp"
+            android:background="@drawable/textviewunderline">
+        </TextView>
+
+        <TextView
+            android:text="Status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="920dp"
+            android:id="@+id/cus_statushide"
+            android:textSize="18sp"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/avenirlight"
+            android:textColor="#000"
+            android:textStyle="bold">
+
+        </TextView>
+
+
+        <TextView
+            android:id="@+id/categoryStatuslistshide"
+            android:textColor="#000"
+            android:layout_below="@+id/cus_statushide"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:drawableBottom= "@drawable/shapes1"
+            android:textSize="18sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/avenirlight"
+            android:padding="7dp"
+            android:background="@drawable/textviewunderline"/>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="1000dp">
+        </View>
+    </RelativeLayout>
+</ScrollView>

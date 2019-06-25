@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    package="in.co.arcus.texvalley">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/texvalleyappicon"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/texvalleyappicon"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"><!--for api9-->
+        <activity android:name=".MainActivity"
+            android:theme="@style/AppThemes.NoActionBar" ><intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter> <!-- // android:theme="@style/AppTheme.NoActionBar"> -->
+
+        </activity>
+        <activity
+            android:name=".dashboard"
+            android:label="DashBoard"
+            android:launchMode = "singleInstance"></activity>
+        <activity
+            android:name=".oppurtunity"
+            android:label="Opportunity"
+           >
+
+        </activity>
+        <activity
+            android:name=".Tabsactivity"
+
+            android:label="Opportunity Creations"
+            >
+
+        </activity>
+        <activity
+            android:name=".Tabsactivity2"
+
+            android:label="Followup Assigns"
+            >
+
+        </activity>
+        <activity
+            android:name=".recyclerview_main"
+            android:label="History"
+           >
+        </activity>
+
+
+
+    </application>
+
+</manifest>

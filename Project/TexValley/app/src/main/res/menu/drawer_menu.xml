@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+        <item
+            android:id="@+id/nav_oppurtunity"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/dollaroppty"
+            android:title="Opportunity"
+            >
+
+        </item>
+
+
+
+        <item
+            android:id="@+id/nav_personlogout"
+            android:icon="@drawable/logouticns"
+            android:title="Logout">
+
+        </item>
+
+
+</menu>

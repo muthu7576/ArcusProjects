@@ -1,0 +1,67 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#2962FF</item>
+        <item name="colorPrimaryDark">#2962FF</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/avenirheavy</item>
+    </style>
+
+
+    <style name="AppThemes.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorPrimary">#ffffff</item>
+    <item name="colorPrimaryDark">#6669ff</item>
+        <item name="colorAccent">#2962FF</item>
+        <item name="android:fontFamily">@font/avenirmedium</item>
+    </style>
+    <style name="AppThemes.NoActionBars" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#00c292</item>
+        <item name="colorPrimaryDark">#a3ffffff</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/avenirmedium</item>
+    </style>
+
+    <style name="tab_text" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:fontFamily">@font/avenirmedium</item>
+        <item name="colorPrimary">#ffffff</item>
+        <item name="colorPrimaryDark">#3bffffff</item>
+    </style>
+
+    <style name="navigateicons" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:fontFamily">@font/avenirlight</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="NumberPickerStyle">
+        <item name="colorControlNormal">#d1cece</item>
+    </style>
+
+    <style name="spinner_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawableBottom">@drawable/gradient_spinner</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:fontFamily">@font/avenirmedium</item>
+        <item name="android:layout_below">@id/cus_category</item>
+        <item name="android:popupBackground">#ffffff</item>\
+        <item name = "android:state_activated">true</item>
+        <item name="android:color">#000000</item>
+    </style>
+
+
+
+
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">#2962FF</item>
+        <item name="colorPrimaryDark">#2962FF</item>
+        <item name="colorAccent">#2962FF</item>
+    </style>
+</resources>
