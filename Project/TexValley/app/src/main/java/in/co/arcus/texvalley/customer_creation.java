@@ -9,15 +9,22 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TabHost;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,7 +39,15 @@ public class customer_creation extends Fragment {
     Spinner listCategory,categoryStatus;
     String[] listArray,statusLists;
     FloatingActionButton nextup1;
-    EditText txtName,txtPhone,txtemail,website,companyname,brandname,address,area,products;
+     public static EditText txtName;
+  public static EditText txtPhone;
+    public static EditText txtemail;
+    EditText website;
+    EditText companyname;
+    EditText brandname;
+    EditText address;
+    public static EditText area;
+    EditText products;
     private HashMap<String,String> categoryMapper;
     private String selectedCategory;
     private String selectedcategoryStatus;
@@ -45,13 +60,114 @@ public class customer_creation extends Fragment {
         view = inflater.inflate(R.layout.customer_creation,container,false);
         nextup1 = (FloatingActionButton) view.findViewById(R.id.next_up);
         txtPhone=(EditText)view.findViewById(R.id.editcus_no);
+       /* if( txtPhone.getText().toString().isEmpty()){
+
+            txtPhone.setError( "Contact Number is required!" );
+
+        }*/
+        txtPhone.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if(i== EditorInfo.IME_ACTION_NEXT || keyEvent != null &&
+                        keyEvent.getAction() == KeyEvent.ACTION_DOWN &&
+                        keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER){
+                    if(txtPhone.getText()!=null && txtPhone.getText().length()>0){
+
+                    }
+                    else {
+                        Toast.makeText(getContext(),"Contact Number is required",Toast.LENGTH_LONG).show();
+                    }
+
+                    return true;
+                }
+                return false;
+            }
+        });
+
         txtName=(EditText)view.findViewById(R.id.editcus_name);
+       /* if( txtName.getText().toString().isEmpty()){
+
+            txtName.setError( "Name is required!" );
+
+        }*/
+        txtName.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if(i== EditorInfo.IME_ACTION_NEXT || keyEvent != null &&
+                        keyEvent.getAction() == KeyEvent.ACTION_DOWN &&
+                        keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER){
+                    if(txtName.getText()!=null && txtName.getText().length()>0){
+
+                    }
+                    else {
+                        Toast.makeText(getContext(),"Name is required",Toast.LENGTH_LONG).show();
+                    }
+
+                    return true;
+                }
+                return false;
+            }
+        });
+
         txtemail=(EditText)view.findViewById(R.id.editcus_email);
+       /* if( txtemail.getText().toString().isEmpty()){
+
+            txtemail.setError( "Email is required!" );
+
+        }*/
+        txtemail.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if(i== EditorInfo.IME_ACTION_NEXT || keyEvent != null &&
+                        keyEvent.getAction() == KeyEvent.ACTION_DOWN &&
+                        keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER){
+                    if(txtemail.getText()!=null && txtemail.getText().length()>0){
+
+                    }
+                    else {
+                        Toast.makeText(getContext(),"Email is required",Toast.LENGTH_LONG).show();
+                    }
+
+                    return true;
+                }
+                return false;
+            }
+        });
+
         website=(EditText)view.findViewById(R.id.editcus_website);
         companyname=(EditText)view.findViewById(R.id.editcus_cmpnyname);
         brandname=(EditText)view.findViewById(R.id.editcus_brndname);
         address=(EditText)view.findViewById(R.id.editcus_address);
         area=(EditText)view.findViewById(R.id.editcus_area);
+
+       /* if( area.getText().toString().isEmpty()){
+
+            area.setError( "Area is required!" );
+
+        }*/
+        area.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if(i== EditorInfo.IME_ACTION_NEXT || keyEvent != null &&
+                        keyEvent.getAction() == KeyEvent.ACTION_DOWN &&
+                        keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER){
+                    if(area.getText()!=null && area.getText().length()>0){
+
+                    }
+                    else {
+                        Toast.makeText(getContext(),"Email is required",Toast.LENGTH_LONG).show();
+                    }
+
+                    return true;
+                }
+                return false;
+            }
+        });
+
         products=(EditText)view.findViewById(R.id.editcus_prdcts);
 
         getbackendcategories();
@@ -59,6 +175,47 @@ public class customer_creation extends Fragment {
         nextup1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                try{
+                    if(((txtPhone.getText()).length() > 0) ) {
+                        Tabsactivity.opputunityPayload.put("contactnumber",txtPhone.getText().toString());
+                    }
+                    else {
+                        Toast.makeText(getContext(),"Required fields should not be empty",Toast.LENGTH_LONG).show();
+                        txtPhone.setError( "Contact Number is required!" );
+
+                        return;
+                    }
+
+                if(((txtName.getText()).length() > 0) ) {
+                    Tabsactivity.opputunityPayload.put("name",txtName.getText().toString());
+                }
+                else {
+                    Toast.makeText(getContext(),"Required fields should not be empty",Toast.LENGTH_LONG).show();
+                    txtName.setError( "Customer Name is required!" );
+                    return;
+                }
+                if(((txtemail.getText()).length() > 0) ) {
+                    Tabsactivity.opputunityPayload.put("email",txtemail.getText().toString());
+                }
+                else {
+                    Toast.makeText(getContext(),"Required fields should not be empty",Toast.LENGTH_LONG).show();
+                    txtemail.setError( "Email is required!" );
+                    return;
+                }
+                if(((area.getText()).length() > 0) ) {
+                    Tabsactivity.opputunityPayload.put("area",area.getText().toString());
+                }
+                else {
+                    Toast.makeText(getContext(),"Required fields should not be empty",Toast.LENGTH_LONG).show();
+                    area.setError( "Area is required!" );
+                    return;
+                }
+
+
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
                 getDataPayload();
                 TabLayout tabLayout = (TabLayout) ((Tabsactivity)getActivity()).findViewById(R.id.tabs);
                 tabLayout.getTabAt(1).select();
@@ -66,11 +223,13 @@ public class customer_creation extends Fragment {
         });
         return view;
 
-
     }
+
+
 
     private void getDataPayload() {
         try {
+
             Tabsactivity.opputunityPayload.put("contactnumber",txtPhone.getText().toString());
             Tabsactivity.opputunityPayload.put("name",txtName.getText().toString());
             Tabsactivity.opputunityPayload.put("email",txtemail.getText().toString());
@@ -229,3 +388,72 @@ public class customer_creation extends Fragment {
 }
 
 
+/*
+ if(txtPhone.getText().toString()!=null || (txtPhone.getText().toString()).length() != 0)
+         {
+         try {
+         Tabsactivity.opputunityPayload.put("phone",txtPhone.getText().toString());
+         } catch (JSONException e) {
+         e.printStackTrace();
+         }
+
+         } else
+         { Toast.makeText(getContext(),"Contact number is required",Toast.LENGTH_LONG).show();
+         return;
+         }
+
+
+         if(txtPhone.getText().toString()!=null || (txtPhone.getText().toString()).length() != 0)
+         {
+         try {
+         Tabsactivity.opputunityPayload.put("phone",txtPhone.getText().toString());
+         } catch (JSONException e) {
+         e.printStackTrace();
+         }
+
+         } else
+         { Toast.makeText(getContext(),"Contact number is required",Toast.LENGTH_LONG).show();
+         return;
+         }
+
+
+         if(txtName.getText().toString()!=null || (txtName.getText().toString()).length() != 0)
+         {
+         try {
+         Tabsactivity.opputunityPayload.put("name",txtName.getText().toString());
+         } catch (JSONException e) {
+         e.printStackTrace();
+         }
+
+         } else
+         { Toast.makeText(getContext(),"Name is required",Toast.LENGTH_LONG).show();
+         return;
+         }
+
+
+         if(txtemail.getText().toString()!=null || (txtemail.getText().toString()).length() != 0)
+         {
+         try {
+         Tabsactivity.opputunityPayload.put("email",txtemail.getText().toString());
+         } catch (JSONException e) {
+         e.printStackTrace();
+         }
+
+         } else
+         { Toast.makeText(getContext(),"Email is required",Toast.LENGTH_LONG).show();
+         return;
+         }
+
+
+         if(area.getText().toString()!=null || (area.getText().toString()).length() != 0)
+         {
+         try {
+         Tabsactivity.opputunityPayload.put("area",area.getText().toString());
+         } catch (JSONException e) {
+         e.printStackTrace();
+         }
+
+         } else
+         { Toast.makeText(getContext(),"Area is required",Toast.LENGTH_LONG).show();
+         return;
+         }*/

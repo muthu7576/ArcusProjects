@@ -40,7 +40,10 @@ package in.co.arcus.texvalley;
         import org.json.JSONException;
         import org.json.JSONObject;
 
+        import java.text.SimpleDateFormat;
+        import java.util.Date;
         import java.util.HashMap;
+        import java.util.Locale;
 
         import static android.app.PendingIntent.getActivity;
 
@@ -74,7 +77,9 @@ public class dashboard extends AppCompatActivity implements NavigationView.OnNav
         relativeLayout.setVisibility(View.INVISIBLE);
 
 
+
         datepickerremainder = (TextView) findViewById(R.id.setdateactions);
+
         dialogviews = View.inflate(dashboard.this, R.layout.datepicker, null);
 
 
@@ -93,24 +98,22 @@ public class dashboard extends AppCompatActivity implements NavigationView.OnNav
     }
 
 
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.dateaction, menu);
-        return true;
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
-        /* final int itemid = item.getItemId();*/
-
-
-        this.findViewById(R.id.setdateactions).setOnClickListener(new View.OnClickListener() {
+        final MenuItem datefunction = menu.findItem(R.id.setdateactions);
+        String date_n = new SimpleDateFormat("dd-MMM-yyyy",Locale.getDefault()).format(new Date());
+        datefunction.setTitle(date_n);
+        datefunction.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onMenuItemClick(MenuItem item) {
                 alertDialog.show();
+                return true;
 
             }
+
         });
 
         alertDialog = new AlertDialog.Builder(this).create();
@@ -119,17 +122,23 @@ public class dashboard extends AppCompatActivity implements NavigationView.OnNav
             public void onClick(View v) {
                 DatePicker datePicker = (DatePicker) dialogviews.findViewById(R.id.date_picker);
 
-                String dateset = datePicker.getYear() + "-" + (datePicker.getMonth() + 1) + "-" + datePicker.getDayOfMonth();
+                String dateset = (datePicker.getDayOfMonth()) + "-" + (datePicker.getMonth() + 1) + "-" +datePicker.getYear() ;
 
-                item.setTitle(dateset);
+
+               datefunction.setTitle(dateset);
                 getBackEndtitledate(dateset, "role_id", userroleid, "user_id", userid);
                 alertDialog.dismiss();
             }
         });
         alertDialog.setView(dialogviews);
+        return true;
+    }
 
 
-        if (mtoggle.onOptionsItemSelected(item)) {
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+
+        if(mtoggle.onOptionsItemSelected(item))  {
             return true;
         }
         return true;
@@ -354,4 +363,29 @@ public class dashboard extends AppCompatActivity implements NavigationView.OnNav
 
 }
 
+/* final int itemid = item.getItemId();*/
+
+
+       /* this.findViewById(R.id.setdateactions).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.show();
+
+            }
+        });
+
+        alertDialog = new AlertDialog.Builder(this).create();
+        dialogviews.findViewById(R.id.date_time_picker).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePicker datePicker = (DatePicker) dialogviews.findViewById(R.id.date_picker);
+
+                String dateset = datePicker.getDayOfMonth() + "-" + (datePicker.getMonth() + 1) + "-" +datePicker.getYear() ;
+
+                item.setTitle(dateset);
+                getBackEndtitledate(dateset, "role_id", userroleid, "user_id", userid);
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.setView(dialogviews);*/
 

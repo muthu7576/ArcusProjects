@@ -2,8 +2,8 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">#2962FF</item>
-        <item name="colorPrimaryDark">#2962FF</item>
+        <item name="colorPrimary">#ff5e62</item>
+        <item name="colorPrimaryDark">#ff5e62</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:fontFamily">@font/avenirheavy</item>
     </style>
@@ -11,8 +11,8 @@
 
     <style name="AppThemes.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
     <item name="colorPrimary">#ffffff</item>
-    <item name="colorPrimaryDark">#6669ff</item>
-        <item name="colorAccent">#2962FF</item>
+    <item name="colorPrimaryDark">#ff5e62</item>
+        <item name="colorAccent">#ff5e62</item>
         <item name="android:fontFamily">@font/avenirmedium</item>
     </style>
     <style name="AppThemes.NoActionBars" parent="Theme.AppCompat.Light.NoActionBar">
@@ -60,8 +60,8 @@
 
 
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorPrimary">#2962FF</item>
-        <item name="colorPrimaryDark">#2962FF</item>
-        <item name="colorAccent">#2962FF</item>
+        <item name="colorPrimary">#ff5e62</item>
+        <item name="colorPrimaryDark">#ff5e62</item>
+        <item name="colorAccent">#ff5e62</item>
     </style>
 </resources>

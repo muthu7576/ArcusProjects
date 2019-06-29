@@ -16,7 +16,7 @@
 
 
     <TextView
-        android:text="Oppurtunity Name"
+        android:text="@string/opptyname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -43,7 +43,10 @@
         android:fontFamily="@font/avenirlight"
         android:padding="15dp"
         android:textSize="18sp"
-        android:layout_marginTop="15dp">
+        android:layout_marginTop="15dp"
+        android:imeOptions="actionNext"
+        android:maxLines="1"
+        android:inputType="text">
 
 
     </EditText>
@@ -59,7 +62,7 @@
         android:layout_marginTop="10dp">
 
         <TextView
-            android:text="Expected Close date"
+            android:text="@string/expctddate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/cus_expctddate"
@@ -68,7 +71,8 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:fontFamily="@font/avenirlight"
-            android:textStyle="bold">
+            android:textStyle="bold"
+            >
 
         </TextView>
     <TextView
@@ -76,14 +80,17 @@
         android:id="@+id/date_time_set"
         android:layout_width="300dp"
         android:text="Set Date"
-        android:fontFamily="@font/avenirmedium"
+        android:fontFamily="@font/avenirlight"
        android:padding="7dp"
         android:layout_below="@+id/cus_expctddate"
         android:layout_height="40dp"
         android:textColor="#000"
         android:layout_marginLeft="10dp"
         android:backgroundTintMode="add"
-        android:textSize="18sp"/>
+        android:textSize="18sp"
+        android:imeOptions="actionNext"
+        android:maxLines="1"
+        android:inputType="text"/>
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -120,9 +127,15 @@
         android:textSize="18sp"
         android:layout_height="35dp"
         android:hint= "select Stages"
-        style="@style/Widget.AppCompat.Spinner.Underlined"
-        />
 
+        />
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="-10dp"
+        android:background="@drawable/shapes1"
+        android:layout_below="@id/listClassifications"/>
     <TextView
         android:text="Sales Stage"
         android:layout_width="wrap_content"
@@ -144,18 +157,55 @@
         android:layout_width="300dp"
         android:layout_height="35dp"
         android:hint= "select Stages"
-        style="@style/Widget.AppCompat.Spinner.Underlined"
         android:textSize="18sp"/>
 
     <TextView
-        android:text="Value"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="-10dp"
+        android:background="@drawable/shapes1"
+        android:layout_below="@id/listStages"/>
+    <TextView
+        android:text="Stage Info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="430dp"
         android:layout_marginLeft="10dp"
+        android:fontFamily="@font/avenirlight"
+        android:textSize="18sp"
+        android:id="@+id/typesofstage"
+        android:textColor="#000"
+        android:textStyle="bold">
+
+    </TextView>
+    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+        android:id="@+id/spintypesofstage"
+        android:layout_below="@+id/typesofstage"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="300dp"
+        android:layout_height="35dp"
+        android:hint= "Select types"
+        android:textSize="18sp"/>
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="-10dp"
+        android:background="@drawable/shapes1"
+        android:layout_below="@id/spintypesofstage"/>
+    <TextView
+        android:text="@string/value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="530dp"
+        android:layout_marginLeft="10dp"
         android:textSize="20sp"
         android:id="@+id/cus_value"
-
+        android:imeOptions="actionNext"
+        android:maxLines="1"
+        android:inputType="text"
         android:textColor="#000"
         android:fontFamily="@font/avenirlight"
         android:textStyle="bold">
@@ -180,7 +230,7 @@
         android:text="Enquiry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="530dp"
+        android:layout_marginTop="630dp"
         android:textSize="18sp"
         android:id="@+id/cus_enquiry"
         android:layout_marginLeft="10dp"
@@ -190,6 +240,7 @@
 
     </TextView>
 
+
     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
         android:id="@+id/listEnquiry"
         android:layout_below="@+id/cus_enquiry"
@@ -198,13 +249,19 @@
         android:layout_marginLeft="10dp"
         android:layout_width="300dp"
         android:layout_height="35dp"
-        style="@style/Widget.AppCompat.Spinner.Underlined"
         android:textSize="18sp"/>
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="-10dp"
+        android:background="@drawable/shapes1"
+        android:layout_below="@id/listEnquiry"/>
     <TextView
         android:text="LEAD SOURCES:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="630dp"
+        android:layout_marginTop="730dp"
         android:textSize="20sp"
         android:layout_marginLeft="10dp"
         android:fontFamily="@font/avenirmedium"
@@ -217,7 +274,7 @@
         android:text="Lead Source"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="690dp"
+        android:layout_marginTop="790dp"
         android:layout_marginLeft="10dp"
         android:textSize="18sp"
         android:id="@+id/cus_leadsrce"
@@ -234,15 +291,20 @@
         android:layout_marginLeft="10dp"
         android:layout_width="300dp"
         android:layout_height="35dp"
-        style="@style/Widget.AppCompat.Spinner.Underlined"
         android:textSize="18sp"/>
 
-
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="-10dp"
+        android:background="@drawable/shapes1"
+        android:layout_below="@id/leadsrce_status"/>
     <TextView
         android:text="Description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="790dp"
+        android:layout_marginTop="890dp"
         android:layout_marginLeft="10dp"
         android:textSize="18sp"
         android:id="@+id/cus_descrptn"
@@ -271,7 +333,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/nexttabicon"
         app:elevation="4dp"
-        app:backgroundTint="#666666"
+        app:backgroundTint="#ff5e62"
 
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
@@ -283,7 +345,7 @@
     <View
         android:layout_width="fill_parent"
         android:layout_height="30dp"
-        android:layout_marginTop="905dp">
+        android:layout_marginTop="1015dp">
     </View>
 </RelativeLayout>
 

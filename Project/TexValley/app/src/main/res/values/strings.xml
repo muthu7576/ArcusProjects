@@ -41,4 +41,11 @@
         <item>Normal</item>
         <item>Dashed</item>
     </string-array>
+    <string name="contactnumber">Contact Number <font color='red'>*</font></string>
+    <string name="user_name">Customer Name <font color='red'>*</font></string>
+    <string name="email">E-mail <font color='red'>*</font></string>
+    <string name="area">Area <font color='red'>*</font></string>
+    <string name="opptyname">Oppurtunity Name <font color='red'>*</font></string>
+    <string name="expctddate">Expected Close date <font color='red'>*</font></string>
+    <string name="value">Value <font color='red'>*</font></string>
 </resources>

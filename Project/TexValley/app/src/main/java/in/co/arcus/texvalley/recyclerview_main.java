@@ -37,8 +37,8 @@ public class recyclerview_main extends AppCompatActivity {
         setContentView(R.layout.recyclerview);
         recyclerView = (RecyclerView)findViewById(R.id.recyclerview_hideup);
         getBackendrecyclerview("id",Tabsactivity2.oppurtunity_id);
-        RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.hideshow2);
-        relativeLayout.setVisibility(View.INVISIBLE);
+        /*RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.hideshow2);
+        relativeLayout.setVisibility(View.INVISIBLE);*/
         assert getSupportActionBar() != null;   //null check
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -94,7 +94,7 @@ public class recyclerview_main extends AppCompatActivity {
 
     private void stringresponseids(JSONArray jsonArrayview) throws JSONException {
 
-        if(jsonArrayview.length()!=0){
+       /* if(jsonArrayview.length()!=0){*/
 
 
         for(int i = 0;i<jsonArrayview.length();i++)
@@ -114,12 +114,12 @@ public class recyclerview_main extends AppCompatActivity {
         mrecycleradapter = new recyclerview_adapter(this,datalist);
         recyclerView.setAdapter(mrecycleradapter);
 
-        }else {
+        /*}else {
             RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.hideshow2);
             relativeLayout.setVisibility(View.VISIBLE);
 
         }
-
+*/
     }
 
 }

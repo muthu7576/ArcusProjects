@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="OPPORUTNITIES CATCH-UP"
+            android:text="Today's Follow-up"
             android:fontFamily="@font/avenirlight"
             android:textStyle="bold"
             android:textColor="#000"
@@ -48,7 +48,7 @@
     android:layout_marginTop="80dp"
         android:layout_centerHorizontal="true"
         />
-            <TextView
+            <!--<TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Oops Sorry!!"
@@ -59,16 +59,16 @@
                 android:layout_marginTop="200dp"
                 android:layout_centerHorizontal="true">
 
-            </TextView>
+            </TextView>-->
 
             <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Can't catch opportunites today"
+        android:text="You don't have opportunites followup today"
         android:fontFamily="@font/avenirlight"
         android:textSize="18sp"
         android:textColor="#000"
-        android:layout_marginTop="230dp"
+        android:layout_marginTop="200dp"
         android:layout_centerHorizontal="true">
 
     </TextView>
@@ -81,7 +81,7 @@
         android:fontFamily="@font/avenirlight"
         android:textSize="18sp"
         android:textColor="#000"
-        android:layout_marginTop="255dp"
+        android:layout_marginTop="230dp"
         android:layout_centerHorizontal="true">
 
     </TextView>
@@ -103,8 +103,11 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:menu="@menu/drawer_menu"
+        app:itemTextColor="@color/colorWhite"
         android:id="@+id/nav_bar"
-        app:itemTextAppearance="@style/navigateicons">
+        app:itemTextAppearance="@style/navigateicons"
+        android:background="@drawable/gradientnavigation"
+        app:itemIconTint="@color/colorWhite">
 
     </android.support.design.widget.NavigationView>
 

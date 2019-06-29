@@ -42,9 +42,14 @@
             android:layout_marginLeft="10dp"
             android:layout_width="300dp"
             android:layout_height="35dp"
-            style="@style/Widget.AppCompat.Spinner.Underlined"
             android:textSize="18sp"/>
-
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="-10dp"
+            android:background="@drawable/shapes1"
+            android:layout_below="@id/slctmdeofcncthide"/>
         <TextView
             android:id="@+id/clssfyuphide"
             android:layout_width="wrap_content"
@@ -66,9 +71,14 @@
             android:layout_marginLeft="10dp"
             android:layout_width="300dp"
             android:layout_height="35dp"
-            style="@style/Widget.AppCompat.Spinner.Underlined"
             android:textSize="18sp"/>
-
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="-10dp"
+            android:background="@drawable/shapes1"
+            android:layout_below="@id/slctclssfyuphide"/>
         <TextView
             android:id="@+id/visitedhide"
             android:layout_width="wrap_content"
@@ -90,9 +100,14 @@
             android:layout_marginLeft="10dp"
             android:layout_width="300dp"
             android:layout_height="35dp"
-            style="@style/Widget.AppCompat.Spinner.Underlined"
             android:textSize="18sp"/>
-
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="-10dp"
+            android:background="@drawable/shapes1"
+            android:layout_below="@id/visiteduphide"/>
         <TextView
             android:id="@+id/stagesfollowuphidehistry"
             android:layout_width="wrap_content"
@@ -114,9 +129,14 @@
             android:layout_marginLeft="10dp"
             android:layout_width="300dp"
             android:layout_height="35dp"
-            style="@style/Widget.AppCompat.Spinner.Underlined"
             android:textSize="18sp"/>
-
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="-10dp"
+            android:background="@drawable/shapes1"
+            android:layout_below="@id/slctfollowuphidehstry"/>
         <TextView
             android:id="@+id/remarkhide"
             android:layout_width="wrap_content"
@@ -162,7 +182,7 @@
                 android:id="@+id/cus_followupdatehide"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Remainder Date"
+                android:text="Next Schedule Date &amp; Time"
                 android:textColor="#000"
                 >
 
@@ -170,7 +190,7 @@
             <TextView
                 android:layout_marginTop="20dp"
                 android:layout_width="300dp"
-                android:fontFamily="@font/avenirmedium"
+                android:fontFamily="@font/avenirlight"
                 android:padding="7dp"
                 android:layout_below="@+id/cus_followupdatehide"
                 android:layout_height="40dp"
@@ -179,7 +199,7 @@
                 android:backgroundTintMode="add"
                 android:id="@+id/date_time_setterhide"
                 android:text="Set Date"
-                android:textSize="18sp" />
+                android:textSize="17sp" />
 
 
             <ImageView
@@ -204,7 +224,7 @@
             android:id="@+id/Relative_layout3"
             android:layout_below="@+id/Relative_layouts">
 
-            <TextView
+           <!-- <TextView
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -216,27 +236,27 @@
                 android:text="Time"
                 android:textColor="#000">
 
-            </TextView>
+            </TextView>-->
             <TextView
                 android:layout_width="300dp"
-                android:fontFamily="@font/avenirmedium"
+                android:fontFamily="@font/avenirlight"
                 android:padding="3dp"
                 android:layout_marginLeft="10dp"
                 android:backgroundTintMode="add"
                 android:layout_height="30dp"
                 android:id="@+id/date_time_setterfollowuphide"
-                android:layout_below="@+id/cus_followuptimehide"
+
                 android:layout_marginTop="20dp"
                 android:inputType="text"
                 android:text="Set Time"
                 android:textColor="#000"
-                android:textSize="18sp"/>
+                android:textSize="17sp"/>
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/timeicon"
                 android:layout_marginLeft="270dp"
-                android:layout_marginTop="63dp"/>
+                android:layout_marginTop="30dp"/>
             <TextView
                 android:layout_width="265dp"
                 android:layout_height="wrap_content"
@@ -255,21 +275,12 @@
             android:textColor="#FFF"
 
             android:background="@drawable/loginbutton"
-            android:backgroundTint="#2962FF"
+            android:backgroundTint="#ff5e62"
             android:layout_centerHorizontal="true"
             android:fontFamily="@font/avenirmedium"
             android:padding="10dp"/>
 
-        <!--<ImageView
-            android:id="@+id/btnhideup"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="810dp"
-            android:background="@drawable/historyview"
-            android:layout_marginLeft="60dp"
-            android:fontFamily="@font/avenirmedium"
-            android:padding="10dp"
-            android:backgroundTint="#C2c2c2"/>-->
+
 
         <View
             android:layout_width="fill_parent"
@@ -278,25 +289,7 @@
         </View>
 
 
-        <!--<RelativeLayout
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            >
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:elevation="4dp"
-                app:backgroundTint="#666666"
-                android:textColor="@color/colorWhite"
-                android:text="Ping to history"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="0dp"
-                android:layout_marginRight="20dp"
-                android:id="@+id/create_oppurtunity"
-                android:onClick="createopportunity"/>
-        </RelativeLayout>-->
+
     </RelativeLayout>
 
 
@@ -305,15 +298,13 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        app:elevation="4dp"
         app:backgroundTint="#666666"
         android:textColor="@color/colorWhite"
-        android:text="Ping to history"
+        android:text="Timeline"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="5dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginBottom="0dp"
         android:id="@+id/histryviewget"
         />
 

@@ -28,6 +28,14 @@ import org.json.JSONObject;
 import java.util.Calendar;
 import java.util.HashMap;
 
+import static in.co.arcus.texvalley.customer_creation.area;
+import static in.co.arcus.texvalley.customer_creation.txtName;
+import static in.co.arcus.texvalley.customer_creation.txtPhone;
+import static in.co.arcus.texvalley.customer_creation.txtemail;
+import static in.co.arcus.texvalley.oppurtunity_creation.mdatepickertexts;
+import static in.co.arcus.texvalley.oppurtunity_creation.oppty_value;
+import static in.co.arcus.texvalley.oppurtunity_creation.opptyname;
+
 public class followup_creation extends Fragment {
 
     View view;
@@ -77,7 +85,7 @@ public class followup_creation extends Fragment {
             public void onClick(View v) {
                 DatePicker datePicker = (DatePicker) dialogviews.findViewById(R.id.date_picker);
 
-                String dateset = datePicker.getYear() +"-" + (datePicker.getMonth()+1) + "-" + datePicker.getDayOfMonth();
+                String dateset = datePicker.getDayOfMonth() +"-" + (datePicker.getMonth()+1) + "-" +datePicker.getYear() ;
 
                 datepickerremainder.setText(dateset);
                 alertDialog.dismiss();
@@ -102,7 +110,7 @@ public class followup_creation extends Fragment {
                 int hour = timePicker.getCurrentHour();
                 int min = timePicker.getCurrentMinute();
                 showTime( hour, min);
-                Timepickerset.setText(new StringBuilder().append(hour).append(" : ").append(min)
+                Timepickerset.setText(new StringBuilder().append(hour).append(":").append(min)
                         .append(" ").append(format));
                 alertDialogtime.dismiss();
             }
@@ -121,32 +129,102 @@ public class followup_creation extends Fragment {
 
 
         creationsubmit.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                getfollowupdata();
-                String url = "http://texvalley.arcus.co.in/texvalleyapp/oppurtunity_creationdatabase.php?user_id="+dashboard.userid;
-                HashMap<String, Object> params = new HashMap<String, Object>();
-                params.put("url", url);
-                params.put("requestmethod", "POST");
-                params.put("inputparams", Tabsactivity.opputunityPayload);
-                asynctask oppurtunity_creationdatabase = new asynctask(params);
-                oppurtunity_creationdatabase.setListener(new asynctask.MyListener() {
-                    @Override
-                    public void onpreExecutemethod() {
 
+
+                try{
+                    if(((txtPhone.getText()).length() > 0) ) {
+                        Tabsactivity.opputunityPayload.put("contactnumber",txtPhone.getText().toString());
+                    }
+                    else {
+                        Toast.makeText(getContext(),"Required fields should not be empty",Toast.LENGTH_LONG).show();
+                        txtPhone.setError( "Contact Number is required!" );
+                        return;
                     }
 
-                    @Override
-                    public void onPostExecutemetod(String result) throws JSONException {
-                        System.out.println("the status output is: " + result);
-                        JSONObject jsonObject = new JSONObject(result);
-                        checkingcreation(jsonObject);
-
+                    if(((txtName.getText()).length() > 0) ) {
+                        Tabsactivity.opputunityPayload.put("name",txtName.getText().toString());
                     }
-                });
-                oppurtunity_creationdatabase.execute();
-                Intent intent = new Intent(view.getContext(),oppurtunity.class);
-                startActivity(intent);
+                    else {
+                        Toast.makeText(getContext(),"Required fields should not be empty",Toast.LENGTH_LONG).show();
+                        txtName.setError( "Customer Name is required!" );
+                        return;
+                    }
+                    if(((txtemail.getText()).length() > 0) ) {
+                        Tabsactivity.opputunityPayload.put("email",txtemail.getText().toString());
+                    }
+                    else {
+                        Toast.makeText(getContext(),"Required fields should not be empty",Toast.LENGTH_LONG).show();
+                        txtemail.setError( "Email is required!" );
+                        return;
+                    }
+                    if(((area.getText()).length() > 0) ) {
+                        Tabsactivity.opputunityPayload.put("area",area.getText().toString());
+                    }
+                    else {
+                        Toast.makeText(getContext(),"Required fields should not be empty",Toast.LENGTH_LONG).show();
+                        area.setError( "Area is required!" );
+                        return;
+                    }
+                    if(((opptyname.getText()).length() > 0) ) {
+                        Tabsactivity.opputunityPayload.put("oppurtunityname",opptyname.getText().toString());
+                    }
+                    else {
+                        Toast.makeText(getContext(),"Required fields should not be empty",Toast.LENGTH_LONG).show();
+                        opptyname.setError( "Opportunity name is required!" );
+
+                        return;
+                    }
+
+                    if(((oppty_value.getText()).length() > 0) ) {
+                        Tabsactivity.opputunityPayload.put("values",oppty_value.getText().toString());
+                    }
+                    else {
+                        Toast.makeText(getContext(),"Required fields should not be empty",Toast.LENGTH_LONG).show();
+                        oppty_value.setError( "Value is required!" );
+                        return;
+                    }
+                    if(((mdatepickertexts.getText()).length() > 0) ) {
+                        Tabsactivity.opputunityPayload.put("expecteddate",mdatepickertexts.getText().toString());
+                    }
+                    else {
+                        Toast.makeText(getContext(),"Required fields should not be empty",Toast.LENGTH_LONG).show();
+                        mdatepickertexts.setError( "Expected close date is required!" );
+                        return;
+                    }
+
+
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+                        getfollowupdata();
+                        String url = "http://texvalley.arcus.co.in/texvalleyapp/oppurtunity_creationdatabase.php?user_id="+dashboard.userid;
+                        HashMap<String, Object> params = new HashMap<String, Object>();
+                        params.put("url", url);
+                        params.put("requestmethod", "POST");
+                        params.put("inputparams", Tabsactivity.opputunityPayload);
+                        asynctask oppurtunity_creationdatabase = new asynctask(params);
+                        oppurtunity_creationdatabase.setListener(new asynctask.MyListener() {
+                            @Override
+                            public void onpreExecutemethod() {
+
+                            }
+
+                            @Override
+                            public void onPostExecutemetod(String result) throws JSONException {
+                                System.out.println("the status output is: " + result);
+                                JSONObject jsonObject = new JSONObject(result);
+                                checkingcreation(jsonObject);
+
+                            }
+                        });
+                        oppurtunity_creationdatabase.execute();
+                        Intent intent = new Intent(view.getContext(),oppurtunity.class);
+                        startActivity(intent);
+
+                /*getfollowupdata();*/
 
             }
         });

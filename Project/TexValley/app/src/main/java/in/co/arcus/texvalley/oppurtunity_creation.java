@@ -11,9 +11,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -23,6 +25,7 @@ import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,19 +38,20 @@ import java.util.HashMap;
 public class oppurtunity_creation extends Fragment {
 
 
-
+    public static EditText opptyname;
+    public static EditText oppty_value;
     View view;
-        Spinner stageslists,classificationlists,enquirylist,leadsrce_status;
-        String[] listStagesArray,listEnquiry,leadsrce_array;
+        Spinner stageslists,classificationlists,enquirylist,leadsrce_status,typesofspinner;
+        String[] listStagesArray,listEnquiry,leadsrce_array,typesofstagesarray;
         String[] classificationListarray = {"Cold","Hot","Warm"};
         View dialogView;
         AlertDialog alertDialog;
-        TextView mdatepickertexts;
-       private String selctedstagelists,selectedenquirylists,selctedleadsrce,selectedclassificationlistst;
-        private  HashMap<String,String> selectedstagesmapper,selctedenquirymapper,selectedleadsrcemapper;
+    public static  TextView mdatepickertexts;
+       private String selctedstagelists,selectedenquirylists,selctedleadsrce,selectedclassificationlistst,selectedtypesofstagelistst;
+        private  HashMap<String,String> selectedstagesmapper,selctedenquirymapper,selectedleadsrcemapper,selectedtypesofstagemapper;
 
     FloatingActionButton nextup;
-    EditText opptyname,oppty_value,descriptionleadsrce;
+    EditText descriptionleadsrce;
     TextView expctd_date;
     public oppurtunity_creation(){
 
@@ -62,7 +66,45 @@ public class oppurtunity_creation extends Fragment {
         expctd_date=(TextView)view.findViewById(R.id.date_time_set);
 
         opptyname=(EditText)view.findViewById(R.id.editcus_opptyname);
+        opptyname.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if(i== EditorInfo.IME_ACTION_NEXT || keyEvent != null &&
+                        keyEvent.getAction() == KeyEvent.ACTION_DOWN &&
+                        keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER){
+                    if(opptyname.getText()!=null && opptyname.getText().length()>0){
+
+                    }
+                    else {
+                        Toast.makeText(getContext(),"Opportunity name is required",Toast.LENGTH_LONG).show();
+                    }
+
+                    return true;
+                }
+                return false;
+            }
+        });
         oppty_value = (EditText)view.findViewById(R.id.editcus_value);
+        oppty_value.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if(i== EditorInfo.IME_ACTION_NEXT || keyEvent != null &&
+                        keyEvent.getAction() == KeyEvent.ACTION_DOWN &&
+                        keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER){
+                    if(oppty_value.getText()!=null && oppty_value.getText().length()>0){
+
+                    }
+                    else {
+                        Toast.makeText(getContext(),"Value is required",Toast.LENGTH_LONG).show();
+                    }
+
+                    return true;
+                }
+                return false;
+            }
+        });
         descriptionleadsrce=(EditText)view.findViewById(R.id.editcus_descrptn);
         classificationLists();
         getBackendsrce();
@@ -71,12 +113,67 @@ public class oppurtunity_creation extends Fragment {
         nextup.setOnClickListener(new View.OnClickListener() {
 @Override
 public void onClick(View v) {
+
+    // check required fields...
+
+    try{
+        if(((opptyname.getText()).length() > 0) ) {
+            Tabsactivity.opputunityPayload.put("oppurtunityname",opptyname.getText().toString());
+        }
+        else {
+            Toast.makeText(getContext(),"Required fields should not be empty",Toast.LENGTH_LONG).show();
+            opptyname.setError( "Opportunity name is required!" );
+
+            return;
+        }
+
+        if(((oppty_value.getText()).length() > 0) ) {
+            Tabsactivity.opputunityPayload.put("values",oppty_value.getText().toString());
+        }
+        else {
+            Toast.makeText(getContext(),"Required fields should not be empty",Toast.LENGTH_LONG).show();
+            oppty_value.setError( "Value is required!" );
+            return;
+        }
+        if(((mdatepickertexts.getText()).length() > 0) ) {
+            Tabsactivity.opputunityPayload.put("expecteddate",mdatepickertexts.getText().toString());
+        }
+        else {
+            Toast.makeText(getContext(),"Required fields should not be empty",Toast.LENGTH_LONG).show();
+            mdatepickertexts.setError( "Expected close date is required!" );
+            return;
+        }
+
+    }catch (JSONException e){
+        e.printStackTrace();
+    }
+
         getdatafrmoppty();
         TabLayout tabLayout = (TabLayout) ((Tabsactivity)getActivity()).findViewById(R.id.tabs);
         tabLayout.getTabAt(2).select();
         }
         });
         mdatepickertexts = (TextView)view.findViewById(R.id.date_time_set);
+
+       /* mdatepickertexts.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if(i== EditorInfo.IME_ACTION_NEXT || keyEvent != null &&
+                        keyEvent.getAction() == KeyEvent.ACTION_DOWN &&
+                        keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER){
+                    if(mdatepickertexts.getText()!=null && mdatepickertexts.getText().length()>0){
+
+                    }
+                    else {
+                        Toast.makeText(getContext(),"Opportunity name is required",Toast.LENGTH_LONG).show();
+                    }
+
+                    return true;
+                }
+                return false;
+            }
+        });*/
         dialogView = View.inflate(view.getContext(), R.layout.datepicker, null);
         alertDialog = new AlertDialog.Builder(view.getContext()).create();
         dialogView.findViewById(R.id.date_time_picker).setOnClickListener(new View.OnClickListener() {
@@ -86,7 +183,7 @@ public void onClick(View view) {
         DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.date_picker);
         // TimePicker timePicker = (TimePicker) dialogView.findViewById(R.id.time_picker);
 
-        String selectedDate = datePicker.getYear() +"-" + (datePicker.getMonth()+1) + "-" + datePicker.getDayOfMonth();
+        String selectedDate = datePicker.getDayOfMonth() +"-" + (datePicker.getMonth()+1) + "-" + datePicker.getYear();
         System.out.println(selectedDate);
         mdatepickertexts.setText(selectedDate);
         // time = calendar.getTimeInMillis();
@@ -109,6 +206,7 @@ private void getdatafrmoppty() {
         Tabsactivity.opputunityPayload.put("expecteddate",expctd_date.getText().toString());
         Tabsactivity.opputunityPayload.put("categorystatuslists",selectedclassificationlistst);
         Tabsactivity.opputunityPayload.put("opptySalesstage",selectedstagesmapper.get(selctedstagelists));
+        Tabsactivity.opputunityPayload.put("typesinfo",selectedtypesofstagemapper.get(selectedtypesofstagelistst));
         Tabsactivity.opputunityPayload.put("values",oppty_value.getText().toString());
         Tabsactivity.opputunityPayload.put("enquirylist",selctedenquirymapper.get(selectedenquirylists));
         Tabsactivity.opputunityPayload.put("leadsrcestatus",selectedleadsrcemapper.get(selctedleadsrce));
@@ -118,6 +216,8 @@ private void getdatafrmoppty() {
         System.out.println("The output expecteddate is " + expctd_date.getText().toString());
         System.out.println("The output categorystatuslists is " + selectedclassificationlistst);
         System.out.println("The output opptySalesstage is " + selectedstagesmapper.get(selctedstagelists));
+        System.out.println("The output opptySalesstage is " + selectedtypesofstagemapper.get(selectedtypesofstagelistst));
+
         System.out.println("The output values is " + oppty_value.getText().toString());
         System.out.println("The output enquirylist is " + selctedenquirymapper.get(selectedenquirylists));
         System.out.println("The output leadsrcestatus is " + selectedleadsrcemapper.get(selctedleadsrce));
@@ -148,7 +248,7 @@ private void classificationLists(){
     });
 
         }
-
+//sales stage lists
 private void setadapter(){
         stageslists = (Spinner)view.findViewById(R.id.listStages);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(view.getContext(),R.layout.spinner_item,listStagesArray);
@@ -158,7 +258,10 @@ private void setadapter(){
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             selctedstagelists = adapterView.getItemAtPosition(i).toString();
+            String typeinfoid = selectedstagesmapper.get(selctedstagelists);
+            getstagesid(typeinfoid);
             System.out.println("Selected stageslists :"+selctedstagelists + "   "+selectedstagesmapper.get(selctedstagelists));
+            System.out.println("Selected stageslists of typeinfo:"+typeinfoid);
         }
 
         @Override
@@ -169,7 +272,11 @@ private void setadapter(){
     });
         }
 
-private  void  getBackendsrce(){
+
+
+
+
+    private  void  getBackendsrce(){
         String url ="http://texvalley.arcus.co.in/texvalleyapp/opportunity_stages.php";
         HashMap<String,Object> params =  new HashMap<String,Object>();
         params.put("url",url);
@@ -202,7 +309,97 @@ private void jsonarrays(JSONObject response) throws JSONException {
         setadapter();
         }
         }
+   //stages lists type spinner...
 
+
+    //postmethod of type
+    private void getstagesid(String idresult){
+
+        String url = "http://texvalley.arcus.co.in/texvalleyapp/typesofstages.php";
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put("url", url);
+        params.put("requestmethod", "POST");
+        params.put("inputparams",idresult);
+
+        asynctask stagestypesgetting = new asynctask(params);
+        stagestypesgetting.setListener(new asynctask.MyListener() {
+            @Override
+            public void onpreExecutemethod() {
+
+            }
+
+            @Override
+            public void onPostExecutemetod(String response) throws JSONException {
+                System.out.println("the status typeinfo values is: "+response);
+                JSONObject jsonobjectoftypesinfo = new JSONObject(response);
+                jsonarraystypesinfo(jsonobjectoftypesinfo);
+                /*gettypesofstageslisted();*/
+
+            }
+
+        });
+        stagestypesgetting.execute();
+
+    }
+
+    private void setadapterforstagestype(){
+        typesofspinner = (Spinner)view.findViewById(R.id.spintypesofstage);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(view.getContext(),R.layout.spinner_item,typesofstagesarray);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        typesofspinner.setAdapter(adapter);
+        typesofspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedtypesofstagelistst = adapterView.getItemAtPosition(i).toString();
+                System.out.println("Selected types of stage info :"+selectedtypesofstagelistst + "   "+selectedtypesofstagemapper.get(selectedtypesofstagelistst));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+
+        });
+    }
+
+
+   /* private void gettypesofstageslisted() {
+
+        String url ="http://texvalley.arcus.co.in/texvalleyapp/typesofstages.php";
+        HashMap<String,Object> params =  new HashMap<String,Object>();
+        params.put("url",url);
+        params.put("requestmethod","GET");
+        asynctask typesofinfo = new asynctask(params);
+        typesofinfo.setListener(new asynctask.MyListener(){
+            @Override
+            public void onpreExecutemethod() {
+
+            }
+
+            @Override
+            public void onPostExecutemetod(String result) throws JSONException {
+                System.out.println("The output is " + result);
+
+            }
+        });
+        typesofinfo.execute();
+    }*/
+
+
+
+    private void jsonarraystypesinfo(JSONObject response) throws JSONException {
+        JSONArray jsonArray = response.getJSONArray("response");
+        typesofstagesarray = new String[jsonArray.length()];
+        selectedtypesofstagemapper = new HashMap<String, String>();
+        for(int i=0;i<jsonArray.length();i++){
+            System.out.println("types info:"+jsonArray.getJSONObject(i));
+            typesofstagesarray[i] = jsonArray.getJSONObject(i).get("type").toString();
+            selectedtypesofstagemapper.put(typesofstagesarray[i],jsonArray.getJSONObject(i).get("id").toString());
+            setadapterforstagestype();
+        }
+    }
+
+// enguiry spinner...
 private void setadapterenquiry(){
         enquirylist = (Spinner)view.findViewById(R.id.listEnquiry);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(view.getContext(),R.layout.spinner_item,listEnquiry);

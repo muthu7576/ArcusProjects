@@ -18,11 +18,11 @@
         android:layout_height="wrap_content"
         android:src="@drawable/plusicon"
         app:elevation="4dp"
-        app:backgroundTint="#666666"
+        app:backgroundTint="#ff5e62"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="65dp"
         android:layout_marginRight="20dp"
         android:id="@+id/create_oppurtunity"
         android:onClick="createopportunity"/>

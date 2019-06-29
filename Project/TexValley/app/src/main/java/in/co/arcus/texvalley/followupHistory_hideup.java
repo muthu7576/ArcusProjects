@@ -69,7 +69,7 @@ public class followupHistory_hideup extends Fragment {
             public void onClick(View v) {
                 DatePicker datePicker = (DatePicker) dialogviews.findViewById(R.id.date_picker);
 
-                String dateset = datePicker.getYear() +"-" + (datePicker.getMonth()+1) + "-" + datePicker.getDayOfMonth();
+                String dateset =  datePicker.getDayOfMonth()+"-" + (datePicker.getMonth()+1) + "-" + datePicker.getYear();
 
                 datepickerremainder.setText(dateset);
                 alertDialog.dismiss();
@@ -94,7 +94,7 @@ public class followupHistory_hideup extends Fragment {
                 int hour = timePicker.getCurrentHour();
                 int min = timePicker.getCurrentMinute();
                 showTime( hour, min);
-                Timepickerset.setText(new StringBuilder().append(hour).append(" : ").append(min)
+                Timepickerset.setText(new StringBuilder().append(hour).append(":").append(min)
                         .append(" ").append(format));
                 alertDialogtime.dismiss();
             }
@@ -160,7 +160,7 @@ public class followupHistory_hideup extends Fragment {
             System.out.println("the all values are:"+Tabsactivity2.followupdate);
             Intent intent = new Intent(view.getContext(),oppurtunity.class);
             startActivity(intent);
-        }else{
+        }else {
             Toast.makeText(view.getContext(),"Enter Valid Values",Toast.LENGTH_LONG).show();
         }
     }

@@ -6,7 +6,7 @@
         <item
             android:id="@+id/nav_oppurtunity"
             android:layout_height="wrap_content"
-            android:icon="@drawable/dollaroppty"
+            android:icon="@drawable/dollaropportunity"
             android:title="Opportunity"
             >
 
@@ -16,7 +16,7 @@
 
         <item
             android:id="@+id/nav_personlogout"
-            android:icon="@drawable/logouticns"
+            android:icon="@drawable/dollarsignout"
             android:title="Logout">
 
         </item>
