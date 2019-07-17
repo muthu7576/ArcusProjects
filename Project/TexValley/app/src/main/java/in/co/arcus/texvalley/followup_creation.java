@@ -3,10 +3,14 @@ package in.co.arcus.texvalley;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +32,7 @@ import org.json.JSONObject;
 import java.util.Calendar;
 import java.util.HashMap;
 
+import static android.content.Context.LOCATION_SERVICE;
 import static in.co.arcus.texvalley.customer_creation.area;
 import static in.co.arcus.texvalley.customer_creation.txtName;
 import static in.co.arcus.texvalley.customer_creation.txtPhone;
@@ -51,7 +56,8 @@ public class followup_creation extends Fragment {
     private Calendar calendar;
     private String format = "";
     TimePicker timePicker;
-
+    public static String latitudecrds;
+    public static String longitudecrds;
 /*
     int hour,min;
 */
@@ -78,7 +84,10 @@ public class followup_creation extends Fragment {
         showTime(hour, min);
          hour = calendar.get(Calendar.HOUR_OF_DAY);
          min = calendar.get(Calendar.MINUTE);*/
-
+        String[] perms = {"android.permission.ACCESS_FINE_LOCATION"};
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(perms, 200);
+        }
         alertDialog = new AlertDialog.Builder(view.getContext()).create();
         dialogviews.findViewById(R.id.date_time_picker).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -199,7 +208,33 @@ public class followup_creation extends Fragment {
                 }catch (JSONException e){
                     e.printStackTrace();
                 }
-                        getfollowupdata();
+
+
+                GPSTracker gps = new GPSTracker(view.getContext());
+                // check if GPS enabled
+                if(gps.canGetLocation()){
+                    LocationManager locationManager = (LocationManager)getContext().getSystemService(LOCATION_SERVICE);
+
+                    if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                        Log.d("Your Location", "latitude:" + gps.getLatitude()
+                                + ", longitude: " + gps.getLongitude());
+                        double latitude = gps.getLatitude();
+                        double longitude = gps.getLongitude();
+                        latitudecrds = String.valueOf(latitude);
+                        longitudecrds = String.valueOf(longitude);
+                        // \n is for new line
+                       // Toast.makeText(view.getContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+                    }
+
+                }else{
+                    // can't get location
+                    // GPS or Network is not enabled
+                    // Ask user to enable GPS/network in settings
+                    gps.showSettingsAlert();
+                }
+
+
+                getfollowupdata();
                         String url = "http://texvalley.arcus.co.in/texvalleyapp/oppurtunity_creationdatabase.php?user_id="+dashboard.userid;
                         HashMap<String, Object> params = new HashMap<String, Object>();
                         params.put("url", url);
@@ -233,11 +268,20 @@ public class followup_creation extends Fragment {
 
 
     }
+    @Override
+    public void onRequestPermissionsResult(int permsRequestCode, String[] permissions, int[] grantResults){
+
+        switch(permsRequestCode){
+            case 200:
+                boolean locationPermision = grantResults[0]==PackageManager.PERMISSION_GRANTED;
+                break;
+        }
+
+    }
 
     private void checkingcreation(JSONObject result) throws JSONException {
 
     if((result.getInt("status") == 200)){
-       /* result.get("cno");*/
         Toast.makeText(view.getContext(),"Successfully Created",Toast.LENGTH_SHORT).show();
         System.out.println("the all values are:"+Tabsactivity.opputunityPayload);
         Intent intent = new Intent(view.getContext(),oppurtunity.class);
@@ -276,12 +320,15 @@ public class followup_creation extends Fragment {
             Tabsactivity.opputunityPayload.put("Assignto",followupassignmapper.get(followupassignto));
             Tabsactivity.opputunityPayload.put("Remainderdate",datepickerremainder.getText().toString());
             Tabsactivity.opputunityPayload.put("Time",Timepickerset.getText().toString());
-
+            Tabsactivity.opputunityPayload.put("latitude",latitudecrds);
+            Tabsactivity.opputunityPayload.put("longitude",longitudecrds);
 
             System.out.println("The output is " + descriptionsfollowup.getText().toString());
             System.out.println("The output is " +followupassignmapper.get(followupassignto));
             System.out.println("The output is " + datepickerremainder.getText().toString());
             System.out.println("The output is " + Timepickerset.getText().toString());
+            System.out.println("The output is " +latitudecrds.toString());
+            System.out.println("The output is " + longitudecrds.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }

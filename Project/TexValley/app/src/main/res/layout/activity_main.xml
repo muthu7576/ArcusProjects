@@ -55,7 +55,7 @@
         android:padding="20dp"
         android:imeOptions="actionNext"
         android:singleLine="true"
-        />
+        android:text="helloarcus@gmail.com"/>
 
     <EditText
         android:id="@+id/login_pwd"
@@ -69,7 +69,7 @@
         android:drawableBottom="@drawable/shapesforlinewhite"
         android:fontFamily="@font/avenirlight"
         android:inputType="textPassword"
-
+android:text="aaaa"
         android:padding="20dp"
         android:hint="Password"
 

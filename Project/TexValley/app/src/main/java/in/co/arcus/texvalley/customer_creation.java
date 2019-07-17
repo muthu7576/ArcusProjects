@@ -269,7 +269,7 @@ public class customer_creation extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedCategory = adapterView.getItemAtPosition(i).toString();
-                System.out.println("Selected Cstegory :"+selectedCategory + "   "+categoryMapper.get(selectedCategory));
+                System.out.println("Selected Category :"+selectedCategory + "   "+categoryMapper.get(selectedCategory));
             }
 
             @Override

@@ -3,10 +3,14 @@ package in.co.arcus.texvalley;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +31,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import static android.content.Context.LOCATION_SERVICE;
+
 public class followupHistory_hideup extends Fragment {
 
     View view;
@@ -42,6 +48,8 @@ public class followupHistory_hideup extends Fragment {
     Spinner mdeofcntcthideup,classificationhideup,visitedbyhideup,stagehideup;
     String followupcntct,followupclssfy,followupuser,followupstage;
     HashMap<String ,String> followupcntctmapper,followupclssfymapper,followupusermapper,followupstagemapper;
+    public static String latitudecrd;
+    public static String longitudecrd;
     public followupHistory_hideup(){
 
     }
@@ -62,7 +70,10 @@ public class followupHistory_hideup extends Fragment {
         histryhideup = (Button) view.findViewById(R.id.histryviewget);
         upadtehideupsbtn = (Button)view.findViewById(R.id.btnupdatefollowup);
         dialogviewtime = View.inflate(view.getContext(),R.layout.timepicker,null);
-
+        String[] perms = {"android.permission.ACCESS_FINE_LOCATION"};
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(perms, 200);
+        }
         alertDialog = new AlertDialog.Builder(view.getContext()).create();
         dialogviews.findViewById(R.id.date_time_picker).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +134,28 @@ public class followupHistory_hideup extends Fragment {
         upadtehideupsbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                GPSTracker gps = new GPSTracker(view.getContext());
+                // check if GPS enabled
+                if(gps.canGetLocation()){
+                    LocationManager locationManager = (LocationManager)getContext().getSystemService(LOCATION_SERVICE);
+
+                    if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                        Log.d("Your Location", "latitude:" + gps.getLatitude()
+                                + ", longitude: " + gps.getLongitude());
+                        double latitude = gps.getLatitude();
+                        double longitude = gps.getLongitude();
+                        latitudecrd = String.valueOf(latitude);
+                        longitudecrd = String.valueOf(longitude);
+                        // \n is for new line
+                       /* Toast.makeText(view.getContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show()*/;
+                        }
+
+                }else{
+                    // can't get location
+                    // GPS or Network is not enabled
+                    // Ask user to enable GPS/network in settings
+                    gps.showSettingsAlert();
+                }
                 getBackendfllwupdate();
                 String url = "http://texvalley.arcus.co.in/texvalleyapp/followup_update.php?user_id="+dashboard.userid;
 
@@ -153,9 +186,20 @@ public class followupHistory_hideup extends Fragment {
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int permsRequestCode, String[] permissions, int[] grantResults){
+
+        switch(permsRequestCode){
+            case 200:
+                boolean locationPermision = grantResults[0]==PackageManager.PERMISSION_GRANTED;
+                break;
+        }
+
+    }
+
     private void checkingcreationoffllwupdate(JSONObject result) throws JSONException {
         if((result.getInt("status") == 200)){
-            /* result.get("cno");*/
+             /*result.get("cno");*/
             Toast.makeText(view.getContext(),"Successfully Created",Toast.LENGTH_SHORT).show();
             System.out.println("the all values are:"+Tabsactivity2.followupdate);
             Intent intent = new Intent(view.getContext(),oppurtunity.class);
@@ -175,6 +219,9 @@ public class followupHistory_hideup extends Fragment {
             Tabsactivity2.followupdate.put("remark",remarkhideups.getText().toString());
             Tabsactivity2.followupdate.put("reminddate",datepickerremainder.getText().toString());
             Tabsactivity2.followupdate.put("remindtime",Timepickerset.getText().toString());
+            Tabsactivity2.followupdate.put("latitude",latitudecrd);
+            Tabsactivity2.followupdate.put("longitude",longitudecrd);
+
 
             System.out.println("The output is " + Tabsactivity2.oppurtunity_id);
             System.out.println("The output is " +followupcntctmapper.get(followupcntct));
@@ -185,7 +232,8 @@ public class followupHistory_hideup extends Fragment {
             System.out.println("The output is " +remarkhideups.getText().toString());
             System.out.println("The output is " + datepickerremainder.getText().toString());
             System.out.println("The output is " + Timepickerset.getText().toString());
-
+            System.out.println("The output is " +latitudecrd.toString());
+            System.out.println("The output is " + longitudecrd.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -469,5 +517,8 @@ public class followupHistory_hideup extends Fragment {
             setadapterforstgshidup();
         }
     }
+
+
+
 
 }

@@ -113,7 +113,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="310dp"
-            android:text="Stage"
+            android:text="StageInfo"
             android:textSize="18sp"
             android:layout_marginLeft="10dp"
             android:fontFamily="@font/avenirlight"

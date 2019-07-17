@@ -47,8 +47,8 @@ public class oppurtunity_creation extends Fragment {
         View dialogView;
         AlertDialog alertDialog;
     public static  TextView mdatepickertexts;
-       private String selctedstagelists,selectedenquirylists,selctedleadsrce,selectedclassificationlistst,selectedtypesofstagelistst;
-        private  HashMap<String,String> selectedstagesmapper,selctedenquirymapper,selectedleadsrcemapper,selectedtypesofstagemapper;
+       private String selectedtypesofstagelistst,selectedenquirylists,selctedleadsrce,selectedclassificationlistst;
+        private  HashMap<String,String> selectedtypesofstagemapper,selctedenquirymapper,selectedleadsrcemapper;
 
     FloatingActionButton nextup;
     EditText descriptionleadsrce;
@@ -59,7 +59,7 @@ public class oppurtunity_creation extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView( LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
          view = inflater.inflate(R.layout.oppurtunity_creation,container,false);
         nextup = (FloatingActionButton) view.findViewById(R.id.next_up);
@@ -107,7 +107,8 @@ public class oppurtunity_creation extends Fragment {
         });
         descriptionleadsrce=(EditText)view.findViewById(R.id.editcus_descrptn);
         classificationLists();
-        getBackendsrce();
+        getstagesid();
+        /* sales stage backends getBackendsrce();*/
         getBackendsrceenquiry();
         getBackendleadsrce();
         nextup.setOnClickListener(new View.OnClickListener() {
@@ -205,7 +206,6 @@ private void getdatafrmoppty() {
         Tabsactivity.opputunityPayload.put("oppurtunityname",opptyname.getText().toString());
         Tabsactivity.opputunityPayload.put("expecteddate",expctd_date.getText().toString());
         Tabsactivity.opputunityPayload.put("categorystatuslists",selectedclassificationlistst);
-        Tabsactivity.opputunityPayload.put("opptySalesstage",selectedstagesmapper.get(selctedstagelists));
         Tabsactivity.opputunityPayload.put("typesinfo",selectedtypesofstagemapper.get(selectedtypesofstagelistst));
         Tabsactivity.opputunityPayload.put("values",oppty_value.getText().toString());
         Tabsactivity.opputunityPayload.put("enquirylist",selctedenquirymapper.get(selectedenquirylists));
@@ -215,7 +215,6 @@ private void getdatafrmoppty() {
         System.out.println("The output oppurtunityname is " + opptyname.getText().toString());
         System.out.println("The output expecteddate is " + expctd_date.getText().toString());
         System.out.println("The output categorystatuslists is " + selectedclassificationlistst);
-        System.out.println("The output opptySalesstage is " + selectedstagesmapper.get(selctedstagelists));
         System.out.println("The output opptySalesstage is " + selectedtypesofstagemapper.get(selectedtypesofstagelistst));
 
         System.out.println("The output values is " + oppty_value.getText().toString());
@@ -249,7 +248,7 @@ private void classificationLists(){
 
         }
 //sales stage lists
-private void setadapter(){
+/*private void setadapter(){
         stageslists = (Spinner)view.findViewById(R.id.listStages);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(view.getContext(),R.layout.spinner_item,listStagesArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -308,18 +307,18 @@ private void jsonarrays(JSONObject response) throws JSONException {
         selectedstagesmapper.put(listStagesArray[i],jsonArray.getJSONObject(i).get("id").toString());
         setadapter();
         }
-        }
+        }*/
    //stages lists type spinner...
 
 
     //postmethod of type
-    private void getstagesid(String idresult){
+    private void getstagesid(){
 
         String url = "http://texvalley.arcus.co.in/texvalleyapp/typesofstages.php";
         HashMap<String, Object> params = new HashMap<String, Object>();
         params.put("url", url);
-        params.put("requestmethod", "POST");
-        params.put("inputparams",idresult);
+        params.put("requestmethod", "GET");
+
 
         asynctask stagestypesgetting = new asynctask(params);
         stagestypesgetting.setListener(new asynctask.MyListener() {
@@ -362,28 +361,6 @@ private void jsonarrays(JSONObject response) throws JSONException {
         });
     }
 
-
-   /* private void gettypesofstageslisted() {
-
-        String url ="http://texvalley.arcus.co.in/texvalleyapp/typesofstages.php";
-        HashMap<String,Object> params =  new HashMap<String,Object>();
-        params.put("url",url);
-        params.put("requestmethod","GET");
-        asynctask typesofinfo = new asynctask(params);
-        typesofinfo.setListener(new asynctask.MyListener(){
-            @Override
-            public void onpreExecutemethod() {
-
-            }
-
-            @Override
-            public void onPostExecutemetod(String result) throws JSONException {
-                System.out.println("The output is " + result);
-
-            }
-        });
-        typesofinfo.execute();
-    }*/
 
 
 
