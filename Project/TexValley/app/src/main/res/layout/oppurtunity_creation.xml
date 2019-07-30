@@ -36,7 +36,7 @@ tools:context=".oppurtunity">
         android:paddingTop="10dp"
         android:id="@+id/editcus_opptyname"
         android:layout_below="@+id/cus_opptyname"
-        android:drawableBottom="@drawable/shapes1"
+        android:drawableBottom="@drawable/shapesblwvrsn"
         android:selectAllOnFocus="false"
         android:paddingBottom="10dp"
         android:textCursorDrawable="@drawable/colorcursor"
@@ -102,7 +102,7 @@ tools:context=".oppurtunity">
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="-13dp"
-            android:background="@drawable/shapes1"
+            android:background="@drawable/shapesblwvrsn"
             android:layout_below="@id/date_time_set"/>
     </RelativeLayout>
     <TextView
@@ -134,7 +134,7 @@ tools:context=".oppurtunity">
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="-10dp"
-        android:background="@drawable/shapes1"
+        android:background="@drawable/shapesblwvrsn"
         android:layout_below="@id/listClassifications"/>
    <!-- <TextView
         android:text="Sales Stage"
@@ -164,10 +164,10 @@ tools:context=".oppurtunity">
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="-10dp"
-        android:background="@drawable/shapes1"
+        android:background="@drawable/shapesblwvrsn"
         android:layout_below="@id/listStages"/>-->
     <TextView
-        android:text="Stage Info"
+        android:text="Stage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="330dp"
@@ -193,7 +193,7 @@ tools:context=".oppurtunity">
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="-10dp"
-        android:background="@drawable/shapes1"
+        android:background="@drawable/shapesblwvrsn"
         android:layout_below="@id/spintypesofstage"/>
     <TextView
         android:text="@string/value"
@@ -218,7 +218,7 @@ tools:context=".oppurtunity">
         android:inputType="number"
         android:id="@+id/editcus_value"
         android:layout_below="@+id/cus_value"
-        android:drawableBottom= "@drawable/shapes1"
+        android:drawableBottom= "@drawable/shapesblwvrsn"
         android:layout_marginLeft="10dp"
         android:textCursorDrawable="@drawable/colorcursor"
         android:fontFamily="@font/avenirlight"
@@ -226,11 +226,64 @@ tools:context=".oppurtunity">
         android:textSize="18sp"
         android:layout_marginTop="15dp">
     </EditText>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/Relative_layoutdte"
+        android:layout_below="@+id/editcus_value"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:text="Create Date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/crtedtetxt"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/avenirlight"
+            android:textStyle="bold"
+            >
+
+        </TextView>
+        <TextView
+            android:layout_marginTop="20dp"
+            android:id="@+id/crtedtetxtget"
+            android:layout_width="300dp"
+            android:text="Set Date"
+            android:fontFamily="@font/avenirlight"
+            android:padding="7dp"
+            android:layout_below="@+id/crtedtetxt"
+            android:layout_height="40dp"
+            android:textColor="#000"
+            android:layout_marginLeft="10dp"
+            android:backgroundTintMode="add"
+            android:textSize="18sp"
+            android:imeOptions="actionNext"
+            android:maxLines="1"
+            android:inputType="text"/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/calendaricon"
+            android:layout_marginLeft="270dp"
+            android:layout_marginTop="60dp"/>
+        <TextView
+            android:layout_width="265dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="-13dp"
+            android:background="@drawable/shapesblwvrsn"
+            android:layout_below="@id/crtedtetxtget"/>
+    </RelativeLayout>
     <TextView
         android:text="Enquiry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="530dp"
+        android:layout_marginTop="655dp"
         android:textSize="18sp"
         android:id="@+id/cus_enquiry"
         android:layout_marginLeft="10dp"
@@ -255,13 +308,13 @@ tools:context=".oppurtunity">
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="-10dp"
-        android:background="@drawable/shapes1"
+        android:background="@drawable/shapesblwvrsn"
         android:layout_below="@id/listEnquiry"/>
     <TextView
         android:text="LEAD SOURCES:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="630dp"
+        android:layout_marginTop="770dp"
         android:textSize="20sp"
         android:layout_marginLeft="10dp"
         android:fontFamily="@font/avenirmedium"
@@ -274,7 +327,7 @@ tools:context=".oppurtunity">
         android:text="Lead Source"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="690dp"
+        android:layout_marginTop="820dp"
         android:layout_marginLeft="10dp"
         android:textSize="18sp"
         android:id="@+id/cus_leadsrce"
@@ -298,13 +351,13 @@ tools:context=".oppurtunity">
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="-10dp"
-        android:background="@drawable/shapes1"
+        android:background="@drawable/shapesblwvrsn"
         android:layout_below="@id/leadsrce_status"/>
     <TextView
         android:text="Description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="790dp"
+        android:layout_marginTop="930dp"
         android:layout_marginLeft="10dp"
         android:textSize="18sp"
         android:id="@+id/cus_descrptn"
@@ -320,7 +373,7 @@ tools:context=".oppurtunity">
         android:id="@+id/editcus_descrptn"
         android:layout_below="@+id/cus_descrptn"
         android:layout_width="300dp"
-        android:drawableBottom= "@drawable/shapes1"
+        android:drawableBottom= "@drawable/shapesblwvrsn"
         android:layout_marginLeft="10dp"
         android:textCursorDrawable="@drawable/colorcursor"
         android:fontFamily="@font/avenirlight"
@@ -345,7 +398,7 @@ tools:context=".oppurtunity">
     <View
         android:layout_width="fill_parent"
         android:layout_height="30dp"
-        android:layout_marginTop="920dp">
+        android:layout_marginTop="1060dp">
     </View>
 </RelativeLayout>
 

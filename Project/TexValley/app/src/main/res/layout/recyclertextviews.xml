@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
@@ -15,51 +14,80 @@
     app:markerSize="20dp"
     app:linePadding="5dp"/>
 
-<android.support.design.card.MaterialCardView
+<android.support.v7.widget.CardView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+
+    xmlns:card_view="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:backgroundTint="#ff5e62"
     android:layout_marginTop="15dp"
     android:layout_marginBottom="15dp"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="5dp"
     android:layout_gravity="center_vertical"
-    app:cardBackgroundColor="@color/colorGrey50"
-    app:contentPadding="15dp">
+    android:background="@drawable/drawableselector"
+    app:contentPadding="2dp"
+    >
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:background="#FFF"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
+
         <TextView
+            android:id="@+id/text_timeline_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/text_timeline_date"
             android:textSize="12sp"
             />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:id="@+id/text_timeline_mdc"
-            android:textColor="@android:color/black"
-            android:fontFamily="@font/avenirlight"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:id="@+id/text_timeline_visitedby"
-            android:textColor="@android:color/black"
-            android:fontFamily="@font/avenirlight"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:id="@+id/text_timeline_stages"
-            android:textColor="@android:color/black"
-            android:fontFamily="@font/avenirlight" />
 
+        <TextView
+            android:id="@+id/text_timeline_stages"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/avenirlight"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_timeline_visitedby"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/avenirlight"
+            android:textColor="@android:color/black" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/avenirlight"
+                android:text="Next Scheduled date:"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_timeline_mdc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="147dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/avenirlight"
+                android:textColor="@android:color/black" />
+
+        </RelativeLayout>
     </LinearLayout>
-</android.support.design.card.MaterialCardView>
+</android.support.v7.widget.CardView>
 
 </LinearLayout>

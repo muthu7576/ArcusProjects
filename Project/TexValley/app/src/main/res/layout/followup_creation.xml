@@ -30,7 +30,7 @@
     android:id="@+id/editcus_followupdescrptn"
     android:layout_below="@+id/cus_followupdescrptn"
     android:layout_width="300dp"
-    android:drawableBottom= "@drawable/shapes1"
+    android:drawableBottom= "@drawable/shapesblwvrsn"
     android:layout_marginLeft="10dp"
     android:textCursorDrawable="@drawable/colorcursor"
     android:fontFamily="@font/avenirlight"
@@ -68,7 +68,7 @@ android:layout_marginTop="120dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="-10dp"
-            android:background="@drawable/shapes1"
+            android:background="@drawable/shapesblwvrsn"
             android:layout_below="@id/followup_assign"/>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -116,7 +116,7 @@ android:layout_marginTop="120dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="-13dp"
-                android:background="@drawable/shapes1"
+                android:background="@drawable/shapesblwvrsn"
                 android:layout_below="@id/date_time_setter"/>
         </RelativeLayout>
 
@@ -172,7 +172,7 @@ android:layout_marginTop="120dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="-1dp"
-                android:background="@drawable/shapes1"
+                android:background="@drawable/shapesblwvrsn"
                 android:layout_below="@id/date_time_setterfollowup"/>
         </RelativeLayout>
         <Button

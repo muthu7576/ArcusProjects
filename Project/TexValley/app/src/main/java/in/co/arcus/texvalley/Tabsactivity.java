@@ -20,8 +20,8 @@ public class Tabsactivity extends AppCompatActivity {
 
 
     public static JSONObject opputunityPayload = new JSONObject();
-    private ViewPager mViewPager;
-    private TabLayout tabLayout;
+    public FCViewPager mViewPager;
+    public TabLayout tabLayout;
     private AppBarLayout appBarLayout;
 
     @Override
@@ -29,8 +29,10 @@ public class Tabsactivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tabs_file);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
+
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = (FCViewPager) findViewById(R.id.container);
+        mViewPager.setPagingEnabled(false);
         assert getSupportActionBar() != null;   //null check
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //Adding Fragments
@@ -42,6 +44,7 @@ public class Tabsactivity extends AppCompatActivity {
 //Adapter Setup...
         mViewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(mViewPager);
+
 
     }
     @Override
@@ -58,6 +61,8 @@ public class Tabsactivity extends AppCompatActivity {
 
         return true;
     }
+
+
    /* @Override
     public boolean onSupportNavigateUp(){
         Intent intent = new Intent(this,oppurtunity.class);
@@ -79,6 +84,9 @@ public class Tabsactivity extends AppCompatActivity {
         return false;
     }
     //spinner functions.....
+
+
+
 
 
 }

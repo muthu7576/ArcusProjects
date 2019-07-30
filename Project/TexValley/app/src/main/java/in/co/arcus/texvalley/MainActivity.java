@@ -1,20 +1,27 @@
 package in.co.arcus.texvalley;
 
+import android.app.AlarmManager;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.PersistableBundle;
 import android.os.StrictMode;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.Calendar;
 import java.util.HashMap;
 
 
@@ -27,16 +34,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         mlogin_user = (EditText) findViewById(R.id.login_user);
         mlogin_pwd = (EditText) findViewById(R.id.login_pwd);
 
 
-        isKill = false;
+
+        //isKill = false;
+        // alarm to set notifications....
+
 
 
 
     }
-
 
     public void onLogin(View view) throws JSONException {
         JSONObject jsonObject = new JSONObject();
@@ -81,3 +92,12 @@ public class MainActivity extends AppCompatActivity {
 
 }
 
+   /* Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY,1);
+                calendar.set(Calendar.MINUTE,23);
+                calendar.set(Calendar.SECOND,15);
+                Intent intent = new Intent(getApplicationContext(),NotificationReciever.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),100,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);*/

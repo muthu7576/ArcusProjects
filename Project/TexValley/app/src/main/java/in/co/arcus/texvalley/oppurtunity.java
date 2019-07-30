@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -38,10 +39,11 @@ public class oppurtunity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.oppurtunity);
         mContext = getApplicationContext();
-        Button mcreate = findViewById(R.id.create_oppurtunity);
+        FloatingActionButton mcreate = (FloatingActionButton) findViewById(R.id.create_oppurtunity);
         assert getSupportActionBar() != null;   //null check
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getBackendlistview();
+
     }
     @Override
     public boolean onSupportNavigateUp(){

@@ -33,7 +33,7 @@
             android:id="@+id/editcus_no"
             android:layout_below="@+id/cus_no"
             android:layout_width="300dp"
-            android:drawableBottom="@drawable/shapes1"
+            android:drawableBottom="@drawable/shapesblwvrsn"
             android:layout_marginLeft="10dp"
             android:textCursorDrawable="@drawable/colorcursor"
             android:fontFamily="@font/avenirlight"
@@ -63,7 +63,7 @@
             android:id="@+id/editcus_name"
             android:layout_below="@+id/cus_name"
             android:layout_width="300dp"
-            android:drawableBottom= "@drawable/shapes1"
+            android:drawableBottom= "@drawable/shapesblwvrsn"
             android:layout_marginLeft="10dp"
             android:textCursorDrawable="@drawable/colorcursor"
             android:fontFamily="@font/avenirlight"
@@ -96,7 +96,7 @@
             android:id="@+id/editcus_email"
             android:layout_below="@+id/cus_email"
             android:layout_width="300dp"
-            android:drawableBottom= "@drawable/shapes1"
+            android:drawableBottom= "@drawable/shapesblwvrsn"
             android:layout_marginLeft="10dp"
             android:textCursorDrawable="@drawable/colorcursor"
             android:fontFamily="@font/avenirlight"
@@ -127,7 +127,7 @@
             android:id="@+id/editcus_website"
             android:layout_below="@+id/cus_website"
             android:layout_width="300dp"
-            android:drawableBottom= "@drawable/shapes1"
+            android:drawableBottom= "@drawable/shapesblwvrsn"
             android:layout_marginLeft="10dp"
             android:textCursorDrawable="@drawable/colorcursor"
             android:fontFamily="@font/avenirlight"
@@ -155,7 +155,7 @@
             android:id="@+id/editcus_cmpnyname"
             android:layout_below="@+id/cus_cmpnyname"
             android:layout_width="300dp"
-            android:drawableBottom= "@drawable/shapes1"
+            android:drawableBottom= "@drawable/shapesblwvrsn"
             android:layout_marginLeft="10dp"
             android:textCursorDrawable="@drawable/colorcursor"
             android:fontFamily="@font/avenirlight"
@@ -183,7 +183,7 @@
             android:id="@+id/editcus_brndname"
             android:layout_below="@+id/cus_brndname"
             android:layout_width="300dp"
-            android:drawableBottom= "@drawable/shapes1"
+            android:drawableBottom= "@drawable/shapesblwvrsn"
             android:layout_marginLeft="10dp"
             android:textCursorDrawable="@drawable/colorcursor"
             android:fontFamily="@font/avenirlight"
@@ -212,7 +212,7 @@
             android:id="@+id/editcus_address"
             android:layout_below="@+id/cus_address"
             android:layout_width="300dp"
-            android:drawableBottom= "@drawable/shapes1"
+            android:drawableBottom= "@drawable/shapesblwvrsn"
             android:layout_marginLeft="10dp"
             android:textCursorDrawable="@drawable/colorcursor"
             android:fontFamily="@font/avenirlight"
@@ -241,7 +241,7 @@
             android:id="@+id/editcus_area"
             android:layout_below="@+id/cus_area"
             android:layout_width="300dp"
-            android:drawableBottom= "@drawable/shapes1"
+            android:drawableBottom= "@drawable/shapesblwvrsn"
             android:layout_marginLeft="10dp"
             android:textCursorDrawable="@drawable/colorcursor"
             android:fontFamily="@font/avenirlight"
@@ -281,14 +281,15 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="-10dp"
-            android:background="@drawable/shapes1"
+            android:background="@drawable/shapesblwvrsn"
             android:layout_below="@id/listCategory"/>
+
         <TextView
-            android:text="Customer Status"
+            android:text="Type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="925dp"
-            android:id="@+id/cus_status"
+            android:id="@+id/typectmr"
             android:textSize="18sp"
             android:layout_marginLeft="10dp"
             android:fontFamily="@font/avenirlight"
@@ -298,8 +299,8 @@
         </TextView>
 
         <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-            android:id="@+id/categoryStatuslists"
-            android:layout_below="@+id/cus_status"
+            android:id="@+id/typectmrlists"
+            android:layout_below="@+id/typectmr"
             android:hint= "select category"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"
@@ -312,13 +313,100 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="-10dp"
-            android:background="@drawable/shapes1"
+            android:background="@drawable/shapesblwvrsn"
+            android:layout_below="@id/typectmrlists"/>
+
+
+        <TextView
+            android:text="Customer Status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1025dp"
+            android:id="@+id/cus_status"
+            android:textSize="18sp"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/avenirlight"
+            android:textColor="#000"
+            android:textStyle="bold">
+
+        </TextView>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/cus_status"
+    android:id="@+id/slcttextile">
+        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+            android:id="@+id/categoryStatuslists"
+
+            android:hint= "select category"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="300dp"
+            android:layout_height="35dp"
+
+            android:textSize="18sp"/>
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="-10dp"
+            android:background="@drawable/shapesblwvrsn"
             android:layout_below="@id/categoryStatuslists"/>
+</RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cus_status"
+        android:id="@+id/slctnontextile">
+        <EditText
+            android:layout_height="wrap_content"
+            android:hint= "Customer Status"
+            android:id="@+id/cstmrstsnon"
+            android:layout_width="300dp"
+            android:drawableBottom= "@drawable/shapesblwvrsn"
+            android:layout_marginLeft="10dp"
+            android:textCursorDrawable="@drawable/colorcursor"
+            android:fontFamily="@font/avenirlight"
+            android:padding="15dp"
+            android:textSize="18sp"
+            android:layout_marginTop="15dp">
+        </EditText>
+
+
+    </RelativeLayout>
+        <TextView
+            android:text="Designation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1125dp"
+            android:id="@+id/dsgntn"
+            android:textSize="18sp"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/avenirlight"
+            android:textColor="#000"
+            android:textStyle="bold">
+
+        </TextView>
+        <EditText
+            android:layout_height="wrap_content"
+            android:hint= "Designation"
+            android:id="@+id/dsgntnlist"
+            android:layout_below="@+id/dsgntn"
+            android:layout_width="300dp"
+            android:drawableBottom= "@drawable/shapesblwvrsn"
+            android:layout_marginLeft="10dp"
+            android:textCursorDrawable="@drawable/colorcursor"
+            android:fontFamily="@font/avenirlight"
+            android:padding="15dp"
+            android:textSize="18sp"
+            android:layout_marginTop="15dp">
+        </EditText>
         <TextView
         android:text="Products"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1025dp"
+        android:layout_marginTop="1230dp"
             android:id="@+id/cus_prdcts"
             android:textSize="18sp"
             android:layout_marginLeft="10dp"
@@ -333,7 +421,7 @@
             android:id="@+id/editcus_prdcts"
             android:layout_below="@+id/cus_prdcts"
             android:layout_width="300dp"
-            android:drawableBottom= "@drawable/shapes1"
+            android:drawableBottom= "@drawable/shapesblwvrsn"
             android:layout_marginLeft="10dp"
             android:textCursorDrawable="@drawable/colorcursor"
             android:fontFamily="@font/avenirlight"

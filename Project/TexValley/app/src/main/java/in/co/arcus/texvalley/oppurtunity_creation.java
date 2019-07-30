@@ -44,15 +44,16 @@ public class oppurtunity_creation extends Fragment {
         Spinner stageslists,classificationlists,enquirylist,leadsrce_status,typesofspinner;
         String[] listStagesArray,listEnquiry,leadsrce_array,typesofstagesarray;
         String[] classificationListarray = {"Cold","Hot","Warm"};
-        View dialogView;
-        AlertDialog alertDialog;
+        View dialogView,datecrtview;
+        AlertDialog alertDialog,alertcrtdte;
     public static  TextView mdatepickertexts;
+    TextView mdatepickertextscrte;
        private String selectedtypesofstagelistst,selectedenquirylists,selctedleadsrce,selectedclassificationlistst;
         private  HashMap<String,String> selectedtypesofstagemapper,selctedenquirymapper,selectedleadsrcemapper;
 
     FloatingActionButton nextup;
     EditText descriptionleadsrce;
-    TextView expctd_date;
+    /*TextView expctd_date;*/
     public oppurtunity_creation(){
 
     }
@@ -63,8 +64,8 @@ public class oppurtunity_creation extends Fragment {
 
          view = inflater.inflate(R.layout.oppurtunity_creation,container,false);
         nextup = (FloatingActionButton) view.findViewById(R.id.next_up);
-        expctd_date=(TextView)view.findViewById(R.id.date_time_set);
-
+       /* expctd_date=(TextView)view.findViewById(R.id.date_time_set);*/
+        mdatepickertextscrte =(TextView)view.findViewById(R.id.crtedtetxtget);
         opptyname=(EditText)view.findViewById(R.id.editcus_opptyname);
         opptyname.setOnEditorActionListener(new EditText.OnEditorActionListener() {
 
@@ -198,26 +199,56 @@ public void onClick(View v) {
 
         }
         });
+
+
+        // create date picker..
+
+        datecrtview = View.inflate(view.getContext(), R.layout.datepicker, null);
+        alertcrtdte = new AlertDialog.Builder(view.getContext()).create();
+        datecrtview.findViewById(R.id.date_time_picker).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                DatePicker datePicker = (DatePicker) datecrtview.findViewById(R.id.date_picker);
+                // TimePicker timePicker = (TimePicker) dialogView.findViewById(R.id.time_picker);
+
+                String selectedDates = datePicker.getDayOfMonth() +"-" + (datePicker.getMonth()+1) + "-" + datePicker.getYear();
+                System.out.println(selectedDates);
+                mdatepickertextscrte.setText(selectedDates);
+                // time = calendar.getTimeInMillis();
+                alertcrtdte.dismiss();
+            }});
+        alertcrtdte.setView(datecrtview);
+        view.findViewById(R.id.crtedtetxtget).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertcrtdte.show();
+
+            }
+        });
+
         return view;
         }
 
 private void getdatafrmoppty() {
     try {
         Tabsactivity.opputunityPayload.put("oppurtunityname",opptyname.getText().toString());
-        Tabsactivity.opputunityPayload.put("expecteddate",expctd_date.getText().toString());
+        Tabsactivity.opputunityPayload.put("expecteddate",mdatepickertexts.getText().toString());
         Tabsactivity.opputunityPayload.put("categorystatuslists",selectedclassificationlistst);
         Tabsactivity.opputunityPayload.put("typesinfo",selectedtypesofstagemapper.get(selectedtypesofstagelistst));
         Tabsactivity.opputunityPayload.put("values",oppty_value.getText().toString());
+        Tabsactivity.opputunityPayload.put("createdate",mdatepickertextscrte.getText().toString());
         Tabsactivity.opputunityPayload.put("enquirylist",selctedenquirymapper.get(selectedenquirylists));
         Tabsactivity.opputunityPayload.put("leadsrcestatus",selectedleadsrcemapper.get(selctedleadsrce));
         Tabsactivity.opputunityPayload.put("descriptionleadsrce",descriptionleadsrce.getText().toString());
 
         System.out.println("The output oppurtunityname is " + opptyname.getText().toString());
-        System.out.println("The output expecteddate is " + expctd_date.getText().toString());
+        System.out.println("The output expecteddate is " + mdatepickertexts.getText().toString());
         System.out.println("The output categorystatuslists is " + selectedclassificationlistst);
         System.out.println("The output opptySalesstage is " + selectedtypesofstagemapper.get(selectedtypesofstagelistst));
 
         System.out.println("The output values is " + oppty_value.getText().toString());
+        System.out.println("The output values is " + mdatepickertextscrte.getText().toString());
         System.out.println("The output enquirylist is " + selctedenquirymapper.get(selectedenquirylists));
         System.out.println("The output leadsrcestatus is " + selectedleadsrcemapper.get(selctedleadsrce));
         System.out.println("The output descriptionleadsrce is " +descriptionleadsrce.getText().toString());

@@ -17,9 +17,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -44,12 +47,14 @@ public class followupHistory_hideup extends Fragment {
     private String format = "";
     TimePicker timePicker;
     EditText remarkhideups;
-    String[] mdeofcntcthideuparray,classificationhideuparray,visitedbyhideuparray,stagearrayhideup;
-    Spinner mdeofcntcthideup,classificationhideup,visitedbyhideup,stagehideup;
-    String followupcntct,followupclssfy,followupuser,followupstage;
-    HashMap<String ,String> followupcntctmapper,followupclssfymapper,followupusermapper,followupstagemapper;
+    String[] mdeofcntcthideuparray,classificationhideuparray,visitedbyhideuparray,stagearrayhideup,followupatryaary;
+    Spinner mdeofcntcthideup,classificationhideup,visitedbyhideup,stagehideup,athrtyspinner;
+    String followupcntct,followupclssfy,followupuser,followupstage,followupatry;
+    HashMap<String ,String> followupcntctmapper,followupclssfymapper,followupusermapper,followupstagemapper,followupatrymapper;
     public static String latitudecrd;
     public static String longitudecrd;
+    CheckBox ch;
+    public static String checkBoxChoices = "";
     public followupHistory_hideup(){
 
     }
@@ -59,6 +64,31 @@ public class followupHistory_hideup extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.followuphistory_hideup,container,false);
+
+        RelativeLayout hideathry = (RelativeLayout)view.findViewById(R.id.nedathrty);
+        hideathry.setVisibility(View.INVISIBLE);
+        ch=(CheckBox)view.findViewById(R.id.checkBoxathrya);
+        ch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    //checked
+
+                    RelativeLayout  hideathrys = (RelativeLayout)view.findViewById(R.id.nedathrty);
+                    hideathrys.setVisibility(View.VISIBLE);
+                    getBackendathrrty();
+                    /*checkBoxChoices = followupatrymapper.get(followupatry);*/
+                   /* System.out.println("the checkedbox credit is "+checkBoxChoices);*/
+                } else {
+                    //not checked
+                    RelativeLayout hideathryss = (RelativeLayout)view.findViewById(R.id.nedathrty);
+                    hideathryss.setVisibility(View.INVISIBLE);
+                    checkBoxChoices = "0";
+                    System.out.println("the uncheckedbox credit is "+checkBoxChoices);
+                }
+            }
+        });
+
         getBackendleadsrce();
         getBackEndclssfy("id", Tabsactivity2.oppurtunity_id);
         getBackEndvistdup("id",Tabsactivity2.oppurtunity_id );
@@ -156,6 +186,23 @@ public class followupHistory_hideup extends Fragment {
                     // Ask user to enable GPS/network in settings
                     gps.showSettingsAlert();
                 }
+
+
+                if (ch.isChecked()) {
+                    /*RelativeLayout hideathry = (RelativeLayout)view.findViewById(R.id.nedathrty);
+                    hideathry.setVisibility(View.VISIBLE);
+                    getBackendathrrty();*/
+                    checkBoxChoices = followupatrymapper.get(followupatry);
+                    System.out.println("the checkedbox is "+checkBoxChoices);
+
+                }
+                else{
+                    RelativeLayout hideathry = (RelativeLayout)view.findViewById(R.id.nedathrty);
+                    hideathry.setVisibility(View.INVISIBLE);
+                    checkBoxChoices = "0";
+                    System.out.println("the uncheckedbox is "+checkBoxChoices);
+
+                }
                 getBackendfllwupdate();
                 String url = "http://texvalley.arcus.co.in/texvalleyapp/followup_update.php?user_id="+dashboard.userid;
 
@@ -185,6 +232,7 @@ public class followupHistory_hideup extends Fragment {
         return view;
 
     }
+
 
     @Override
     public void onRequestPermissionsResult(int permsRequestCode, String[] permissions, int[] grantResults){
@@ -221,6 +269,7 @@ public class followupHistory_hideup extends Fragment {
             Tabsactivity2.followupdate.put("remindtime",Timepickerset.getText().toString());
             Tabsactivity2.followupdate.put("latitude",latitudecrd);
             Tabsactivity2.followupdate.put("longitude",longitudecrd);
+            Tabsactivity2.followupdate.put("authority",checkBoxChoices);
 
 
             System.out.println("The output is " + Tabsactivity2.oppurtunity_id);
@@ -234,6 +283,7 @@ public class followupHistory_hideup extends Fragment {
             System.out.println("The output is " + Timepickerset.getText().toString());
             System.out.println("The output is " +latitudecrd.toString());
             System.out.println("The output is " + longitudecrd.toString());
+            System.out.println("The output is " + checkBoxChoices);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -518,6 +568,83 @@ public class followupHistory_hideup extends Fragment {
         }
     }
 
+    /*public void checkbox_clicked(View v)
+    {
+
+        if(ch.isChecked())
+        {
+            // true,do the task
+
+            RelativeLayout hideathrys = (RelativeLayout)view.findViewById(R.id.nedathrty);
+            hideathrys.setVisibility(View.VISIBLE);
+            getBackendathrrty();
+
+        }
+        else
+        {
+        *//*Toast.makeText(view.getContext(),"Click specified checkbox to show Authority",Toast.LENGTH_LONG).show();*//*
+            RelativeLayout hideathryss = (RelativeLayout)view.findViewById(R.id.nedathrty);
+            hideathryss.setVisibility(View.INVISIBLE);
+        }
+
+    }*/
+
+    private void setadapterathry(){
+        athrtyspinner = (Spinner)view.findViewById(R.id.nedathrtylists);
+        ArrayAdapter<String> adapterathry = new ArrayAdapter<String>(view.getContext(),R.layout.spinner_item,followupatryaary);
+        adapterathry.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        athrtyspinner.setAdapter(adapterathry);
+        athrtyspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                followupatry = parent.getItemAtPosition(position).toString();
+                System.out.println("The assign to is:"+followupatry+" "+followupatrymapper.get(followupatry));
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+    }
+
+    private  void  getBackendathrrty(){
+        String url ="http://texvalley.arcus.co.in/texvalleyapp/authority.php";
+        HashMap<String,Object> params =  new HashMap<String,Object>();
+        params.put("url",url);
+        params.put("requestmethod","GET");
+        asynctask followupsathrty = new asynctask(params);
+        followupsathrty.setListener(new asynctask.MyListener(){
+            @Override
+            public void onpreExecutemethod() {
+
+            }
+
+            @Override
+            public void onPostExecutemetod(String result) throws JSONException {
+                System.out.println("The output is " + result);
+                JSONObject mdeofhideupsathrty = new JSONObject(result);
+                jsonarraysathrty(mdeofhideupsathrty);
+            }
+        });
+        followupsathrty.execute();
+    }
+
+    private void jsonarraysathrty(JSONObject response) throws JSONException {
+        JSONArray jsonArrayathrty = response.getJSONArray("response");
+        followupatryaary = new String[jsonArrayathrty.length()];
+        followupatrymapper = new HashMap<String, String>();
+        for(int i=0;i<jsonArrayathrty.length();i++){
+            System.out.println("stages:"+jsonArrayathrty.getJSONObject(i));
+            followupatryaary[i] = jsonArrayathrty.getJSONObject(i).get("authority").toString();
+            followupatrymapper.put(followupatryaary[i],jsonArrayathrty.getJSONObject(i).get("id").toString());
+            setadapterathry();
+        }
+    }
 
 
 

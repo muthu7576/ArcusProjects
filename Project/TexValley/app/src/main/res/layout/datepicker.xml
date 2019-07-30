@@ -13,7 +13,7 @@
         android:calendarViewShown="true"
         android:spinnersShown="false"
         android:theme="@style/AppBaseTheme"
-        >
+        android:fontFamily="@font/avenirlight">
 
     </DatePicker>
 

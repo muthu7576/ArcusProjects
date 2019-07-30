@@ -101,8 +101,8 @@ public class recyclerview_main extends AppCompatActivity {
         {
             int idofuser = jsonArrayview.getJSONObject(i).getInt("id");
             String dateofvistd = jsonArrayview.getJSONObject(i).getString("visitdate");
-            String uservisited = jsonArrayview.getJSONObject(i).getString("username");
-            String cntctofuser = jsonArrayview.getJSONObject(i).getString("contact");
+            String uservisited = jsonArrayview.getJSONObject(i).getString("reminddate");
+            String cntctofuser = jsonArrayview.getJSONObject(i).getString("remark");
             String stageofuser = jsonArrayview.getJSONObject(i).getString("stage");
 
             MyData data = new MyData(idofuser,dateofvistd,uservisited,cntctofuser,stageofuser);
