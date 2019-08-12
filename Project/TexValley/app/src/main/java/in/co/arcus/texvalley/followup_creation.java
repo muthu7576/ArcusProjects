@@ -2,18 +2,23 @@ package in.co.arcus.texvalley;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -24,6 +29,18 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.tasks.OnCanceledListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,20 +54,21 @@ import static in.co.arcus.texvalley.customer_creation.area;
 import static in.co.arcus.texvalley.customer_creation.txtName;
 import static in.co.arcus.texvalley.customer_creation.txtPhone;
 import static in.co.arcus.texvalley.customer_creation.txtemail;
+import static in.co.arcus.texvalley.oppurtunity_creation.mcretedtepickrtxts;
 import static in.co.arcus.texvalley.oppurtunity_creation.mdatepickertexts;
 import static in.co.arcus.texvalley.oppurtunity_creation.oppty_value;
-import static in.co.arcus.texvalley.oppurtunity_creation.opptyname;
+
 
 public class followup_creation extends Fragment {
 
     View view;
     String[] followup_assgnarray;
     Spinner followup_spinner;
-    TextView datepickerremainder,Timepickerset;
+    private static TextView datepickerremainder,Timepickerset;
     View dialogviews,dialogviewtime;
     AlertDialog alertDialog,alertDialogtime;
     Button creationsubmit;
-    EditText descriptionsfollowup;
+    private static EditText descriptionsfollowup;
     String followupassignto;
     HashMap<String ,String> followupassignmapper;
     private Calendar calendar;
@@ -58,6 +76,11 @@ public class followup_creation extends Fragment {
     TimePicker timePicker;
     public static String latitudecrds;
     public static String longitudecrds;
+    private SettingsClient mSettingsClient;
+    private LocationSettingsRequest mLocationSettingsRequest;
+    private static final int REQUEST_CHECK_SETTINGS = 214;
+    private static final int REQUEST_ENABLE_GPS = 516;
+    public static String projectlatitude,projectlongitude;
 /*
     int hour,min;
 */
@@ -74,6 +97,25 @@ public class followup_creation extends Fragment {
         creationsubmit = (Button)view.findViewById(R.id.next_up);
         getBackendleadsrce();
         descriptionsfollowup = (EditText)view.findViewById(R.id.editcus_followupdescrptn) ;
+        descriptionsfollowup.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if(i== EditorInfo.IME_ACTION_NEXT || keyEvent != null &&
+                        keyEvent.getAction() == KeyEvent.ACTION_DOWN &&
+                        keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER){
+                    if(descriptionsfollowup.getText()!=null && descriptionsfollowup.getText().length()>0){
+
+                    }
+                    else {
+                        Toast.makeText(getContext(),"Value is required",Toast.LENGTH_LONG).show();
+                    }
+
+                    return true;
+                }
+                return false;
+            }
+        });
 
         datepickerremainder = (TextView)view.findViewById(R.id.date_time_setter);
         Timepickerset = (TextView)view.findViewById(R.id.date_time_setterfollowup);
@@ -177,15 +219,7 @@ public class followup_creation extends Fragment {
                         area.setError( "Area is required!" );
                         return;
                     }
-                    if(((opptyname.getText()).length() > 0) ) {
-                        Tabsactivity.opputunityPayload.put("oppurtunityname",opptyname.getText().toString());
-                    }
-                    else {
-                        Toast.makeText(getContext(),"Required fields should not be empty",Toast.LENGTH_LONG).show();
-                        opptyname.setError( "Opportunity name is required!" );
 
-                        return;
-                    }
 
                     if(((oppty_value.getText()).length() > 0) ) {
                         Tabsactivity.opputunityPayload.put("values",oppty_value.getText().toString());
@@ -200,15 +234,49 @@ public class followup_creation extends Fragment {
                     }
                     else {
                         Toast.makeText(getContext(),"Required fields should not be empty",Toast.LENGTH_LONG).show();
-                        mdatepickertexts.setError( "Expected close date is required!" );
+                        /*mdatepickertexts.setError( "Expected close date is required!" );*/
+                        return;
+                    }
+
+                    if(((mcretedtepickrtxts.getText()).length() > 0) ) {
+                        Tabsactivity.opputunityPayload.put("createdate",mcretedtepickrtxts.getText().toString());
+                    }
+                    else {
+                        Toast.makeText(getContext(),"Required fields should not be empty",Toast.LENGTH_LONG).show();
+                        /*mcretedtepickrtxts.setError( "Expected close date is required!" );*/
+                        return;
+                    }
+
+                    if(((descriptionsfollowup.getText()).length() > 0) ) {
+                        Tabsactivity.opputunityPayload.put("description",descriptionsfollowup.getText().toString());
+                    }
+                    else {
+                        Toast.makeText(getContext(),"Required fields should not be empty",Toast.LENGTH_LONG).show();
+                        /*mcretedtepickrtxts.setError( "Expected close date is required!" );*/
                         return;
                     }
 
 
+                    if(datepickerremainder.getText().length() >0){
+                        Tabsactivity.opputunityPayload.put("Remainderdate",datepickerremainder.getText().toString());
+                    }
+                    else {
+                        Toast.makeText(getContext(),"Required fields should not be empty",Toast.LENGTH_LONG).show();
+                        /*datepickerremainder.setError( "Expected close date is required!" );*/
+                        return;
+                    }
+
+                    if(Timepickerset.getText().length() >0){
+                        Tabsactivity.opputunityPayload.put("Time",Timepickerset.getText().toString());
+                    }
+                    else {
+                        Toast.makeText(getContext(),"Required fields should not be empty",Toast.LENGTH_LONG).show();
+                        /*Timepickerset.setError( "Expected close date is required!" );*/
+                        return;
+                    }
                 }catch (JSONException e){
                     e.printStackTrace();
                 }
-
 
                 GPSTracker gps = new GPSTracker(view.getContext());
                 // check if GPS enabled
@@ -223,7 +291,7 @@ public class followup_creation extends Fragment {
                         latitudecrds = String.valueOf(latitude);
                         longitudecrds = String.valueOf(longitude);
                         // \n is for new line
-                       // Toast.makeText(view.getContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+                        // Toast.makeText(view.getContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
                     }
 
                 }else{
@@ -235,6 +303,39 @@ public class followup_creation extends Fragment {
 
 
                 getfollowupdata();
+
+                    if(!gps.isGPSenabled){
+                        gps.showSettingsAlert();
+
+
+                    }
+
+                    else{
+                        GPSTracker gpss = new GPSTracker(view.getContext());
+                        // check if GPS enabled
+                        if(gpss.canGetLocation()){
+                            LocationManager locationManager = (LocationManager)getContext().getSystemService(LOCATION_SERVICE);
+
+                            if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                                Log.d("Your Location", "latitude:" + gpss.getLatitude()
+                                        + ", longitude: " + gpss.getLongitude());
+                                double latitude = gpss.getLatitude();
+                                double longitude = gpss.getLongitude();
+                                latitudecrds = String.valueOf(latitude);
+                                longitudecrds = String.valueOf(longitude);
+                                // \n is for new line
+                                // Toast.makeText(view.getContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+                            }
+
+                        }else{
+                            // can't get location
+                            // GPS or Network is not enabled
+                            // Ask user to enable GPS/network in settings
+                            gpss.showSettingsAlert();
+                        }
+                        getfollowupdata();
+
+
                         String url = "http://texvalley.arcus.co.in/texvalleyapp/oppurtunity_creationdatabase.php?user_id="+dashboard.userid;
                         HashMap<String, Object> params = new HashMap<String, Object>();
                         params.put("url", url);
@@ -256,8 +357,9 @@ public class followup_creation extends Fragment {
                             }
                         });
                         oppurtunity_creationdatabase.execute();
-                        Intent intent = new Intent(view.getContext(),oppurtunity.class);
-                        startActivity(intent);
+
+                    }
+
 
                 /*getfollowupdata();*/
 
@@ -268,6 +370,39 @@ public class followup_creation extends Fragment {
 
 
     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CHECK_SETTINGS) {
+            switch (resultCode) {
+                case Activity.RESULT_OK:
+                    //Success Perform Task Here
+                    break;
+                case Activity.RESULT_CANCELED:
+                    Log.e("GPS","User denied to access location");
+                    openGpsEnableSetting();
+                    break;
+            }
+        } else if (requestCode == REQUEST_ENABLE_GPS) {
+            LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+            boolean isGpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+            if (!isGpsEnabled) {
+                openGpsEnableSetting();
+            } else {
+
+            }
+        }
+    }
+
+    private void openGpsEnableSetting() {
+        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        startActivityForResult(intent, REQUEST_ENABLE_GPS);
+    }
+
+
+
     @Override
     public void onRequestPermissionsResult(int permsRequestCode, String[] permissions, int[] grantResults){
 
@@ -327,8 +462,7 @@ public class followup_creation extends Fragment {
             System.out.println("The output is " +followupassignmapper.get(followupassignto));
             System.out.println("The output is " + datepickerremainder.getText().toString());
             System.out.println("The output is " + Timepickerset.getText().toString());
-            System.out.println("The output is " +latitudecrds.toString());
-            System.out.println("The output is " + longitudecrds.toString());
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -355,7 +489,8 @@ public class followup_creation extends Fragment {
     }
 
     private  void  getBackendleadsrce(){
-        String url ="http://texvalley.arcus.co.in/texvalleyapp/followup_Assign.php";
+        String url ="http://texvalley.arcus.co.in/texvalleyapp/followup_Assign.php?userroleid="+dashboard.userroleid
+                +"&userid="+dashboard.userid;
         HashMap<String,Object> params =  new HashMap<String,Object>();
         params.put("url",url);
         params.put("requestmethod","GET");

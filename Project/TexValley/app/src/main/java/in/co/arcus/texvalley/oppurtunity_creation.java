@@ -38,18 +38,18 @@ import java.util.HashMap;
 public class oppurtunity_creation extends Fragment {
 
 
-    public static EditText opptyname;
+
     public static EditText oppty_value;
     View view;
-        Spinner stageslists,classificationlists,enquirylist,leadsrce_status,typesofspinner;
-        String[] listStagesArray,listEnquiry,leadsrce_array,typesofstagesarray;
-        String[] classificationListarray = {"Cold","Hot","Warm"};
+        Spinner opptynmelists,classificationlists,enquirylist,leadsrce_status,typesofspinner;
+        String[] listoppnmeArray,listEnquiry,leadsrce_array,typesofstagesarray;
+        String[] classificationListarray ;
         View dialogView,datecrtview;
         AlertDialog alertDialog,alertcrtdte;
-    public static  TextView mdatepickertexts;
+    public static  TextView mdatepickertexts,mcretedtepickrtxts;
     TextView mdatepickertextscrte;
-       private String selectedtypesofstagelistst,selectedenquirylists,selctedleadsrce,selectedclassificationlistst;
-        private  HashMap<String,String> selectedtypesofstagemapper,selctedenquirymapper,selectedleadsrcemapper;
+       public String selectedtypesofstagelistst,selectedenquirylists,selctedleadsrce,selectedclassificationlistst,slctedopptynme;
+        public   HashMap<String,String> selectedtypesofstagemapper,selctedenquirymapper,selectedleadsrcemapper,clssfctnmppr,slctedopptynmemppr;
 
     FloatingActionButton nextup;
     EditText descriptionleadsrce;
@@ -65,27 +65,8 @@ public class oppurtunity_creation extends Fragment {
          view = inflater.inflate(R.layout.oppurtunity_creation,container,false);
         nextup = (FloatingActionButton) view.findViewById(R.id.next_up);
        /* expctd_date=(TextView)view.findViewById(R.id.date_time_set);*/
-        mdatepickertextscrte =(TextView)view.findViewById(R.id.crtedtetxtget);
-        opptyname=(EditText)view.findViewById(R.id.editcus_opptyname);
-        opptyname.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+        mcretedtepickrtxts =(TextView)view.findViewById(R.id.crtedtetxtget);
 
-            @Override
-            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                if(i== EditorInfo.IME_ACTION_NEXT || keyEvent != null &&
-                        keyEvent.getAction() == KeyEvent.ACTION_DOWN &&
-                        keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER){
-                    if(opptyname.getText()!=null && opptyname.getText().length()>0){
-
-                    }
-                    else {
-                        Toast.makeText(getContext(),"Opportunity name is required",Toast.LENGTH_LONG).show();
-                    }
-
-                    return true;
-                }
-                return false;
-            }
-        });
         oppty_value = (EditText)view.findViewById(R.id.editcus_value);
         oppty_value.setOnEditorActionListener(new EditText.OnEditorActionListener() {
 
@@ -107,8 +88,9 @@ public class oppurtunity_creation extends Fragment {
             }
         });
         descriptionleadsrce=(EditText)view.findViewById(R.id.editcus_descrptn);
-        classificationLists();
+        getBackendclfylst();
         getstagesid();
+        getBackendoppnmeLists();
         /* sales stage backends getBackendsrce();*/
         getBackendsrceenquiry();
         getBackendleadsrce();
@@ -119,15 +101,7 @@ public void onClick(View v) {
     // check required fields...
 
     try{
-        if(((opptyname.getText()).length() > 0) ) {
-            Tabsactivity.opputunityPayload.put("oppurtunityname",opptyname.getText().toString());
-        }
-        else {
-            Toast.makeText(getContext(),"Required fields should not be empty",Toast.LENGTH_LONG).show();
-            opptyname.setError( "Opportunity name is required!" );
 
-            return;
-        }
 
         if(((oppty_value.getText()).length() > 0) ) {
             Tabsactivity.opputunityPayload.put("values",oppty_value.getText().toString());
@@ -142,7 +116,16 @@ public void onClick(View v) {
         }
         else {
             Toast.makeText(getContext(),"Required fields should not be empty",Toast.LENGTH_LONG).show();
-            mdatepickertexts.setError( "Expected close date is required!" );
+           /* mdatepickertexts.setError( "Expected close date is required!" );*/
+            return;
+        }
+
+        if(((mcretedtepickrtxts.getText()).length() > 0) ) {
+            Tabsactivity.opputunityPayload.put("createdate",mcretedtepickrtxts.getText().toString());
+        }
+        else {
+            Toast.makeText(getContext(),"Required fields should not be empty",Toast.LENGTH_LONG).show();
+            /*mcretedtepickrtxts.setError( "Created date is required!" );*/
             return;
         }
 
@@ -214,7 +197,7 @@ public void onClick(View v) {
 
                 String selectedDates = datePicker.getDayOfMonth() +"-" + (datePicker.getMonth()+1) + "-" + datePicker.getYear();
                 System.out.println(selectedDates);
-                mdatepickertextscrte.setText(selectedDates);
+                mcretedtepickrtxts.setText(selectedDates);
                 // time = calendar.getTimeInMillis();
                 alertcrtdte.dismiss();
             }});
@@ -232,23 +215,23 @@ public void onClick(View v) {
 
 private void getdatafrmoppty() {
     try {
-        Tabsactivity.opputunityPayload.put("oppurtunityname",opptyname.getText().toString());
+        Tabsactivity.opputunityPayload.put("oppurtunityname",slctedopptynmemppr.get(slctedopptynme));
         Tabsactivity.opputunityPayload.put("expecteddate",mdatepickertexts.getText().toString());
-        Tabsactivity.opputunityPayload.put("categorystatuslists",selectedclassificationlistst);
+        Tabsactivity.opputunityPayload.put("categorystatuslists",clssfctnmppr.get(selectedclassificationlistst));
         Tabsactivity.opputunityPayload.put("typesinfo",selectedtypesofstagemapper.get(selectedtypesofstagelistst));
         Tabsactivity.opputunityPayload.put("values",oppty_value.getText().toString());
-        Tabsactivity.opputunityPayload.put("createdate",mdatepickertextscrte.getText().toString());
+        Tabsactivity.opputunityPayload.put("createdate",mcretedtepickrtxts.getText().toString());
         Tabsactivity.opputunityPayload.put("enquirylist",selctedenquirymapper.get(selectedenquirylists));
         Tabsactivity.opputunityPayload.put("leadsrcestatus",selectedleadsrcemapper.get(selctedleadsrce));
         Tabsactivity.opputunityPayload.put("descriptionleadsrce",descriptionleadsrce.getText().toString());
 
-        System.out.println("The output oppurtunityname is " + opptyname.getText().toString());
+        System.out.println("The output opptynames is " + slctedopptynmemppr.get(slctedopptynme));
         System.out.println("The output expecteddate is " + mdatepickertexts.getText().toString());
-        System.out.println("The output categorystatuslists is " + selectedclassificationlistst);
+        System.out.println("The output categorystatuslists is " + clssfctnmppr.get(selectedclassificationlistst));
         System.out.println("The output opptySalesstage is " + selectedtypesofstagemapper.get(selectedtypesofstagelistst));
 
         System.out.println("The output values is " + oppty_value.getText().toString());
-        System.out.println("The output values is " + mdatepickertextscrte.getText().toString());
+        System.out.println("The output values is " + mcretedtepickrtxts.getText().toString());
         System.out.println("The output enquirylist is " + selctedenquirymapper.get(selectedenquirylists));
         System.out.println("The output leadsrcestatus is " + selectedleadsrcemapper.get(selctedleadsrce));
         System.out.println("The output descriptionleadsrce is " +descriptionleadsrce.getText().toString());
@@ -257,6 +240,67 @@ private void getdatafrmoppty() {
     }
 
 }
+
+
+// oppurtunity name lists new updts...
+
+    private void oppnmeLists(){
+        opptynmelists = (Spinner)view.findViewById(R.id.opptynmelists);
+        ArrayAdapter<String> adaptersoppnme = new ArrayAdapter<String>(view.getContext(),R.layout.spinner_item,listoppnmeArray);
+        adaptersoppnme.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        opptynmelists.setAdapter(adaptersoppnme);
+        opptynmelists.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                slctedopptynme = adapterView.getItemAtPosition(i).toString();
+                System.out.println("Selected slctedopptynmemppr :"+slctedopptynme+" "
+                        +slctedopptynmemppr.get(slctedopptynme) );
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+
+        });
+
+    }
+
+    private  void  getBackendoppnmeLists(){
+        String url ="http://texvalley.arcus.co.in/texvalleyapp/opptynames.php";
+        HashMap<String,Object> params =  new HashMap<String,Object>();
+        params.put("url",url);
+        params.put("requestmethod","GET");
+        asynctask opptynamesget = new asynctask(params);
+        opptynamesget.setListener(new asynctask.MyListener(){
+            @Override
+            public void onpreExecutemethod() {
+
+            }
+
+            @Override
+            public void onPostExecutemetod(String result) throws JSONException {
+                System.out.println("The output opptynamesget is " + result);
+                JSONObject jsonObjectopptynamesget = new JSONObject(result);
+                jsonarraysopptynamesget(jsonObjectopptynamesget);
+            }
+        });
+        opptynamesget.execute();
+    }
+
+    private void jsonarraysopptynamesget(JSONObject response) throws JSONException {
+        JSONArray jsonArray = response.getJSONArray("response");
+        listoppnmeArray = new String[jsonArray.length()];
+        slctedopptynmemppr = new HashMap<String, String>();
+        for(int i=0;i<jsonArray.length();i++){
+            System.out.println("opptynamesget get new:"+jsonArray.getJSONObject(i));
+            listoppnmeArray[i] = jsonArray.getJSONObject(i).get("name").toString();
+            slctedopptynmemppr.put(listoppnmeArray[i],jsonArray.getJSONObject(i).get("id").toString());
+            oppnmeLists();
+        }
+    }
+
+
 
 private void classificationLists(){
         classificationlists = (Spinner)view.findViewById(R.id.listClassifications);
@@ -267,7 +311,8 @@ private void classificationLists(){
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             selectedclassificationlistst = adapterView.getItemAtPosition(i).toString();
-            System.out.println("Selected classificationlists :"+selectedclassificationlistst );
+            System.out.println("Selected classificationlists :"+selectedclassificationlistst+" "
+                    +clssfctnmppr.get(selectedclassificationlistst) );
         }
 
         @Override
@@ -278,6 +323,41 @@ private void classificationLists(){
     });
 
         }
+
+    private  void  getBackendclfylst(){
+        String url ="http://texvalley.arcus.co.in/texvalleyapp/classificationctreation.php";
+        HashMap<String,Object> params =  new HashMap<String,Object>();
+        params.put("url",url);
+        params.put("requestmethod","GET");
+        asynctask clfylsttasks = new asynctask(params);
+        clfylsttasks.setListener(new asynctask.MyListener(){
+            @Override
+            public void onpreExecutemethod() {
+
+            }
+
+            @Override
+            public void onPostExecutemetod(String result) throws JSONException {
+                System.out.println("The output clfylsttasks is " + result);
+                JSONObject jsonObjectclfylsttasks = new JSONObject(result);
+                jsonarraysclfylsttasks(jsonObjectclfylsttasks);
+            }
+        });
+        clfylsttasks.execute();
+    }
+
+    private void jsonarraysclfylsttasks(JSONObject response) throws JSONException {
+        JSONArray jsonArray = response.getJSONArray("response");
+        classificationListarray = new String[jsonArray.length()];
+        clssfctnmppr = new HashMap<String, String>();
+        for(int i=0;i<jsonArray.length();i++){
+            System.out.println("Classification get new:"+jsonArray.getJSONObject(i));
+            classificationListarray[i] = jsonArray.getJSONObject(i).get("name").toString();
+            clssfctnmppr.put(classificationListarray[i],jsonArray.getJSONObject(i).get("id").toString());
+            classificationLists();
+        }
+    }
+
 //sales stage lists
 /*private void setadapter(){
         stageslists = (Spinner)view.findViewById(R.id.listStages);

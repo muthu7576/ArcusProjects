@@ -28,28 +28,26 @@ tools:context=".oppurtunity">
         android:textStyle="bold">
 
     </TextView>
-    <EditText
-        android:layout_width="300dp"
-        android:layout_marginLeft="10dp"
-        android:layout_height="wrap_content"
-        android:hint= "Opportunity Name"
-        android:paddingTop="10dp"
-        android:id="@+id/editcus_opptyname"
+    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+        android:id="@+id/opptynmelists"
         android:layout_below="@+id/cus_opptyname"
-        android:drawableBottom="@drawable/shapesblwvrsn"
-        android:selectAllOnFocus="false"
-        android:paddingBottom="10dp"
-        android:textCursorDrawable="@drawable/colorcursor"
-        android:fontFamily="@font/avenirlight"
-        android:padding="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="300dp"
         android:textSize="18sp"
-        android:layout_marginTop="15dp"
-        android:imeOptions="actionNext"
-        android:maxLines="1"
-        android:inputType="text">
+        android:layout_height="35dp"
+        android:hint= "select Stages"
 
+        />
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="-10dp"
+        android:background="@drawable/shapesblwvrsn"
+        android:layout_below="@id/opptynmelists"
+        android:id="@+id/txtppnme"/>
 
-    </EditText>
 
 
 
@@ -58,7 +56,7 @@ tools:context=".oppurtunity">
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:id="@+id/Relative_layout1"
-        android:layout_below="@+id/editcus_opptyname"
+        android:layout_below="@+id/txtppnme"
         android:layout_marginTop="10dp">
 
         <TextView
@@ -79,7 +77,8 @@ tools:context=".oppurtunity">
             android:layout_marginTop="20dp"
             android:id="@+id/date_time_set"
             android:layout_width="300dp"
-            android:text="Set Date"
+            android:hint="Set Date"
+            android:textColorHint="#000"
             android:fontFamily="@font/avenirlight"
             android:padding="7dp"
             android:layout_below="@+id/cus_expctddate"
@@ -106,7 +105,7 @@ tools:context=".oppurtunity">
             android:layout_below="@id/date_time_set"/>
     </RelativeLayout>
     <TextView
-        android:text="Classfication"
+        android:text="@string/classification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="230dp"
@@ -167,7 +166,7 @@ tools:context=".oppurtunity">
         android:background="@drawable/shapesblwvrsn"
         android:layout_below="@id/listStages"/>-->
     <TextView
-        android:text="Stage"
+        android:text="@string/stage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="330dp"
@@ -236,7 +235,7 @@ tools:context=".oppurtunity">
         android:layout_marginTop="10dp">
 
         <TextView
-            android:text="Create Date"
+            android:text="@string/createdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/crtedtetxt"
@@ -253,7 +252,8 @@ tools:context=".oppurtunity">
             android:layout_marginTop="20dp"
             android:id="@+id/crtedtetxtget"
             android:layout_width="300dp"
-            android:text="Set Date"
+            android:hint="Set Date"
+            android:textColorHint="#000"
             android:fontFamily="@font/avenirlight"
             android:padding="7dp"
             android:layout_below="@+id/crtedtetxt"
@@ -280,7 +280,7 @@ tools:context=".oppurtunity">
             android:layout_below="@id/crtedtetxtget"/>
     </RelativeLayout>
     <TextView
-        android:text="Enquiry"
+        android:text="@string/enquiry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="655dp"
@@ -324,7 +324,7 @@ tools:context=".oppurtunity">
 
     </TextView>
     <TextView
-        android:text="Lead Source"
+        android:text="@string/leadsource"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="820dp"

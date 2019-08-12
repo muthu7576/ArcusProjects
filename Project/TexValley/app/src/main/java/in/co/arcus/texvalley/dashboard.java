@@ -2,15 +2,21 @@ package in.co.arcus.texvalley;
 
 
         import android.annotation.SuppressLint;
+        import android.app.Activity;
         import android.app.AlertDialog;
         import android.content.Context;
         import android.content.DialogInterface;
         import android.content.Intent;
+        import android.content.IntentSender;
         import android.content.SharedPreferences;
+        import android.location.LocationManager;
         import android.os.Build;
         import android.os.Bundle;
 
         import android.os.Handler;
+        import android.provider.Settings;
+        import android.support.annotation.NonNull;
+        import android.support.annotation.Nullable;
         import android.support.annotation.RequiresApi;
         import android.support.design.widget.NavigationView;
 
@@ -36,6 +42,19 @@ package in.co.arcus.texvalley;
         import android.widget.Spinner;
         import android.widget.TextView;
         import android.widget.Toast;
+
+        import com.google.android.gms.common.api.ApiException;
+        import com.google.android.gms.common.api.ResolvableApiException;
+        import com.google.android.gms.location.LocationRequest;
+        import com.google.android.gms.location.LocationServices;
+        import com.google.android.gms.location.LocationSettingsRequest;
+        import com.google.android.gms.location.LocationSettingsResponse;
+        import com.google.android.gms.location.LocationSettingsStatusCodes;
+        import com.google.android.gms.location.SettingsClient;
+        import com.google.android.gms.tasks.OnCanceledListener;
+        import com.google.android.gms.tasks.OnFailureListener;
+        import com.google.android.gms.tasks.OnSuccessListener;
+
         import org.json.JSONArray;
         import org.json.JSONException;
         import org.json.JSONObject;
@@ -63,6 +82,10 @@ public class dashboard extends AppCompatActivity implements NavigationView.OnNav
     View dialogviews;
     public static String userroleid;
     public static String userid;
+    private SettingsClient mSettingsClient;
+    private LocationSettingsRequest mLocationSettingsRequest;
+    private static final int REQUEST_CHECK_SETTINGS = 214;
+    private static final int REQUEST_ENABLE_GPS = 516;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +118,81 @@ public class dashboard extends AppCompatActivity implements NavigationView.OnNav
         getBackendlistview();
 
 
+        //new gps update....
+
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
+        builder.addLocationRequest(new LocationRequest().setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY));
+        builder.setAlwaysShow(true);
+        mLocationSettingsRequest = builder.build();
+
+        mSettingsClient = LocationServices.getSettingsClient(dashboard.this);
+
+        mSettingsClient
+                .checkLocationSettings(mLocationSettingsRequest)
+                .addOnSuccessListener(new OnSuccessListener<LocationSettingsResponse>() {
+                    @Override
+                    public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
+                        //Success Perform Task Here
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        int statusCode = ((ApiException) e).getStatusCode();
+                        switch (statusCode) {
+                            case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                                try {
+                                    ResolvableApiException rae = (ResolvableApiException) e;
+                                    rae.startResolutionForResult(dashboard.this, REQUEST_CHECK_SETTINGS);
+                                } catch (IntentSender.SendIntentException sie) {
+                                    Log.e("GPS","Unable to execute request.");
+                                }
+                                break;
+                            case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                                Log.e("GPS","Location settings are inadequate, and cannot be fixed here. Fix in Settings.");
+                        }
+                    }
+                })
+                .addOnCanceledListener(new OnCanceledListener() {
+                    @Override
+                    public void onCanceled() {
+                        Log.e("GPS","checkLocationSettings -> onCanceled");
+                    }
+                });
+
+
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CHECK_SETTINGS) {
+            switch (resultCode) {
+                case Activity.RESULT_OK:
+                    //Success Perform Task Here
+                    break;
+                case Activity.RESULT_CANCELED:
+                    Log.e("GPS","User denied to access location");
+                    openGpsEnableSetting();
+                    break;
+            }
+        } else if (requestCode == REQUEST_ENABLE_GPS) {
+            LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            boolean isGpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+            if (!isGpsEnabled) {
+                openGpsEnableSetting();
+            } else {
+
+            }
+        }
+    }
+
+    private void openGpsEnableSetting() {
+        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        startActivityForResult(intent, REQUEST_ENABLE_GPS);
     }
 
 

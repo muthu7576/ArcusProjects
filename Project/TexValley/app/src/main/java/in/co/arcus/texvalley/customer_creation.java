@@ -1,37 +1,37 @@
 package in.co.arcus.texvalley;
 
-import android.content.Intent;
-import android.os.Bundle;
+        import android.content.Intent;
+        import android.os.Bundle;
 
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
+        import android.support.annotation.Nullable;
+        import android.support.design.widget.FloatingActionButton;
+        import android.support.design.widget.TabLayout;
+        import android.support.v4.app.Fragment;
 
-import android.support.v4.app.FragmentTransaction;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RelativeLayout;
-import android.widget.Spinner;
-import android.widget.TabHost;
-import android.widget.TextView;
-import android.widget.Toast;
+        import android.support.v4.app.FragmentTransaction;
+        import android.text.Editable;
+        import android.text.TextUtils;
+        import android.text.TextWatcher;
+        import android.view.KeyEvent;
+        import android.view.LayoutInflater;
+        import android.view.View;
+        import android.view.ViewGroup;
+        import android.view.inputmethod.EditorInfo;
+        import android.widget.AdapterView;
+        import android.widget.ArrayAdapter;
+        import android.widget.Button;
+        import android.widget.EditText;
+        import android.widget.RelativeLayout;
+        import android.widget.Spinner;
+        import android.widget.TabHost;
+        import android.widget.TextView;
+        import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+        import org.json.JSONArray;
+        import org.json.JSONException;
+        import org.json.JSONObject;
 
-import java.util.HashMap;
+        import java.util.HashMap;
 
 public class customer_creation extends Fragment {
 
@@ -55,7 +55,7 @@ public class customer_creation extends Fragment {
     private HashMap<String, String> categorystatuses;
     String[] typecstmrs = {"Textile", "Non-Textile"};
     private String selectedtypestex;
-public static String selectedtextle,selectednontextle;
+    public static String selectedtextle,selectednontextle;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -71,6 +71,9 @@ public static String selectedtextle,selectednontextle;
 
         RelativeLayout nontexttilerlt = (RelativeLayout) view.findViewById(R.id.slctnontextile);
         nontexttilerlt.setVisibility(View.INVISIBLE);
+
+        RelativeLayout nontextileprdcts = (RelativeLayout)view.findViewById(R.id.slctnontextileprdct);
+        nontextileprdcts.setVisibility(View.VISIBLE);
         txtPhone.setOnEditorActionListener(new EditText.OnEditorActionListener() {
 
             @Override
@@ -431,9 +434,13 @@ public static String selectedtextle,selectednontextle;
             texttilerlt.setVisibility(View.INVISIBLE);
             RelativeLayout nontexttilerlt = (RelativeLayout) view.findViewById(R.id.slctnontextile);
             nontexttilerlt.setVisibility(View.VISIBLE);
-             /*cstmrststextle = categorystatuses.get(selectedcategoryStatus);*/
+
+            RelativeLayout nontextileprdcts = (RelativeLayout)view.findViewById(R.id.slctnontextileprdct);
+            nontextileprdcts.setVisibility(View.INVISIBLE);
+            /*cstmrststextle = categorystatuses.get(selectedcategoryStatus);*/
             String cstmrststextle = null;
             Tabsactivity.opputunityPayload.put("customerstatus", "NULL");
+            Tabsactivity.opputunityPayload.put("products", "NULL");
 
         }else if(selectedtypestex.equals("Textile")){
 
@@ -441,6 +448,9 @@ public static String selectedtextle,selectednontextle;
             nontexttilerlt.setVisibility(View.INVISIBLE);
             RelativeLayout texttilerlt = (RelativeLayout) view.findViewById(R.id.slcttextile);
             texttilerlt.setVisibility(View.VISIBLE);
+
+            RelativeLayout nontextileprdcts = (RelativeLayout)view.findViewById(R.id.slctnontextileprdct);
+            nontextileprdcts.setVisibility(View.VISIBLE);
             String cstmrstsnontextle = null;
             Tabsactivity.opputunityPayload.put("customerstatusnon", "NULL");
 

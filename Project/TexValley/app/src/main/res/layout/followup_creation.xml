@@ -12,7 +12,7 @@
         android:id="@+id/Relative_fragment">
 
 <TextView
-    android:text="Description"
+    android:text="@string/fllwdescptn"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
@@ -39,7 +39,7 @@
     android:layout_marginTop="15dp">
 </EditText>
 <TextView
-android:text="Assign To"
+android:text="@string/assignto"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
 android:layout_marginTop="120dp"
@@ -79,7 +79,7 @@ android:layout_marginTop="120dp"
             android:layout_marginTop="15dp">
 
             <TextView
-                android:text="Next Schedule Date &amp; Time"
+                android:text="@string/nxtschdlddte"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/cus_followupdate"
@@ -95,7 +95,8 @@ android:layout_marginTop="120dp"
                 android:layout_marginTop="20dp"
                 android:id="@+id/date_time_setter"
                 android:layout_width="300dp"
-                android:text="Set Date"
+                android:hint="Set Date"
+                android:textColorHint="#000"
                 android:fontFamily="@font/avenirlight"
                 android:padding="7dp"
                 android:layout_below="@+id/cus_followupdate"
@@ -155,7 +156,8 @@ android:layout_marginTop="120dp"
                 android:textSize="18sp"
                 android:layout_marginTop="20dp"
                 android:id="@+id/date_time_setterfollowup"
-                android:text="Set Time"
+                android:hint="Set Time"
+                android:textColorHint="#000"
                 android:inputType="text"
 
                 android:layout_height="30dp"

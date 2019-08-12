@@ -2,18 +2,24 @@ package in.co.arcus.texvalley;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -28,6 +34,18 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+/*import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.tasks.OnCanceledListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;*/
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,14 +57,14 @@ import static android.content.Context.LOCATION_SERVICE;
 public class followupHistory_hideup extends Fragment {
 
     View view;
-    TextView datepickerremainder,Timepickerset;
+    private static TextView datepickerremainder,Timepickerset;
     Button histryhideup;
     Button upadtehideupsbtn;
     View dialogviews,dialogviewtime;
     AlertDialog alertDialog,alertDialogtime;
     private String format = "";
     TimePicker timePicker;
-    EditText remarkhideups;
+   private static EditText remarkhideups;
     String[] mdeofcntcthideuparray,classificationhideuparray,visitedbyhideuparray,stagearrayhideup,followupatryaary;
     Spinner mdeofcntcthideup,classificationhideup,visitedbyhideup,stagehideup,athrtyspinner;
     String followupcntct,followupclssfy,followupuser,followupstage,followupatry;
@@ -55,6 +73,10 @@ public class followupHistory_hideup extends Fragment {
     public static String longitudecrd;
     CheckBox ch;
     public static String checkBoxChoices = "";
+  /*  private SettingsClient mSettingsClient;
+    private LocationSettingsRequest mLocationSettingsRequest;*/
+    private static final int REQUEST_CHECK_SETTINGS = 214;
+    private static final int REQUEST_ENABLE_GPS = 516;
     public followupHistory_hideup(){
 
     }
@@ -94,6 +116,26 @@ public class followupHistory_hideup extends Fragment {
         getBackEndvistdup("id",Tabsactivity2.oppurtunity_id );
         getBackEndstgshidup("id",Tabsactivity2.oppurtunity_id );
         remarkhideups = (EditText)view.findViewById(R.id.remarkedit);
+
+        remarkhideups.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if(i== EditorInfo.IME_ACTION_NEXT || keyEvent != null &&
+                        keyEvent.getAction() == KeyEvent.ACTION_DOWN &&
+                        keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER){
+                    if(remarkhideups.getText()!=null && remarkhideups.getText().length()>0){
+
+                    }
+                    else {
+                        Toast.makeText(getContext(),"Value is required",Toast.LENGTH_LONG).show();
+                    }
+
+                    return true;
+                }
+                return false;
+            }
+        });
         datepickerremainder = (TextView)view.findViewById(R.id.date_time_setterhide);
         Timepickerset = (TextView)view.findViewById(R.id.date_time_setterfollowuphide);
         dialogviews = View.inflate(view.getContext(),R.layout.datepicker,null);
@@ -164,6 +206,35 @@ public class followupHistory_hideup extends Fragment {
         upadtehideupsbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+    try {
+        if(((remarkhideups.getText()).length() > 0) ) {
+            Tabsactivity2.followupdate.put("remark",remarkhideups.getText().toString());
+        }
+        else {
+            Toast.makeText(getContext(),"Required fields should not be empty",Toast.LENGTH_LONG).show();
+            remarkhideups.setError( "Remark is required!" );
+            return;
+        }
+
+        if (datepickerremainder.getText().length() > 0) {
+            Tabsactivity2.followupdate.put("reminddate", datepickerremainder.getText().toString());
+        } else {
+        Toast.makeText(getContext(), "Required fields should not be empty", Toast.LENGTH_LONG).show();
+        /*datepickerremainder.setError( "Expected close date is required!" );*/
+        return;
+        }
+
+        if (Timepickerset.getText().length() > 0) {
+            Tabsactivity2.followupdate.put("remindtime", Timepickerset.getText().toString());
+        } else {
+        Toast.makeText(getContext(), "Required fields should not be empty", Toast.LENGTH_LONG).show();
+        /*Timepickerset.setError( "Expected close date is required!" );*/
+        return;
+        }
+        }catch (JSONException e){
+
+        }
+
                 GPSTracker gps = new GPSTracker(view.getContext());
                 // check if GPS enabled
                 if(gps.canGetLocation()){
@@ -178,6 +249,7 @@ public class followupHistory_hideup extends Fragment {
                         longitudecrd = String.valueOf(longitude);
                         // \n is for new line
                        /* Toast.makeText(view.getContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show()*/;
+
                         }
 
                 }else{
@@ -185,9 +257,8 @@ public class followupHistory_hideup extends Fragment {
                     // GPS or Network is not enabled
                     // Ask user to enable GPS/network in settings
                     gps.showSettingsAlert();
+                    return;
                 }
-
-
                 if (ch.isChecked()) {
                     /*RelativeLayout hideathry = (RelativeLayout)view.findViewById(R.id.nedathrty);
                     hideathry.setVisibility(View.VISIBLE);
@@ -204,28 +275,79 @@ public class followupHistory_hideup extends Fragment {
 
                 }
                 getBackendfllwupdate();
-                String url = "http://texvalley.arcus.co.in/texvalleyapp/followup_update.php?user_id="+dashboard.userid;
 
-                System.out.println("the updated url is:"+url);
-                HashMap<String,Object> params = new HashMap<String, Object>();
-                params.put("url",url);
-                params.put("requestmethod","POST");
-                params.put("inputparams",Tabsactivity2.followupdate);
-                asynctask followupupdatesfctn = new asynctask(params);
-                followupupdatesfctn.setListener(new asynctask.MyListener() {
-                    @Override
-                    public void onpreExecutemethod() {
+                if(!gps.isGPSenabled){
+                    gps.showSettingsAlert();
+                }
+                else{
+                    GPSTracker gpss = new GPSTracker(view.getContext());
+                    // check if GPS enabled
+                    if(gpss.canGetLocation()){
+                        LocationManager locationManager = (LocationManager)getContext().getSystemService(LOCATION_SERVICE);
 
+                        if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                            Log.d("Your Location", "latitude:" + gpss.getLatitude()
+                                    + ", longitude: " + gpss.getLongitude());
+                            double latitude = gpss.getLatitude();
+                            double longitude = gpss.getLongitude();
+                            latitudecrd = String.valueOf(latitude);
+                            longitudecrd = String.valueOf(longitude);
+                        }
+
+                    }else{
+                        // can't get location
+                        // GPS or Network is not enabled
+                        // Ask user to enable GPS/network in settings
+                        gpss.showSettingsAlert();
+
+                        return ;
                     }
 
-                    @Override
-                    public void onPostExecutemetod(String result) throws JSONException {
-                        System.out.println("the status output is: " + result);
-                        JSONObject jsonObject = new JSONObject(result);
-                        checkingcreationoffllwupdate(jsonObject);
-                    }
-                });
-                followupupdatesfctn.execute();
+                            if (ch.isChecked()) {
+                    /*RelativeLayout hideathry = (RelativeLayout)view.findViewById(R.id.nedathrty);
+                    hideathry.setVisibility(View.VISIBLE);
+                    getBackendathrrty();*/
+                                checkBoxChoices = followupatrymapper.get(followupatry);
+                                System.out.println("the checkedbox is "+checkBoxChoices);
+
+                            }
+                            else{
+                                RelativeLayout hideathry = (RelativeLayout)view.findViewById(R.id.nedathrty);
+                                hideathry.setVisibility(View.INVISIBLE);
+                                checkBoxChoices = "0";
+                                System.out.println("the uncheckedbox is "+checkBoxChoices);
+
+                            }
+                            getBackendfllwupdate();
+
+
+                            //new gps update....
+
+
+                            String url = "http://texvalley.arcus.co.in/texvalleyapp/followup_update.php?user_id="+dashboard.userid;
+
+                            System.out.println("the updated url is:"+url);
+                            HashMap<String,Object> params = new HashMap<String, Object>();
+                            params.put("url",url);
+                            params.put("requestmethod","POST");
+                            params.put("inputparams",Tabsactivity2.followupdate);
+                            asynctask followupupdatesfctn = new asynctask(params);
+                            followupupdatesfctn.setListener(new asynctask.MyListener() {
+                                @Override
+                                public void onpreExecutemethod() {
+
+                                }
+
+                                @Override
+                                public void onPostExecutemetod(String result) throws JSONException {
+                                    System.out.println("the status output is: " + result);
+                                    JSONObject jsonObject = new JSONObject(result);
+                                    checkingcreationoffllwupdate(jsonObject);
+                                }
+                            });
+                            followupupdatesfctn.execute();
+                }
+
             }
         });
 
@@ -233,6 +355,37 @@ public class followupHistory_hideup extends Fragment {
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CHECK_SETTINGS) {
+            switch (resultCode) {
+                case Activity.RESULT_OK:
+                    //Success Perform Task Here
+                    break;
+                case Activity.RESULT_CANCELED:
+                    Log.e("GPS","User denied to access location");
+                    openGpsEnableSetting();
+                    break;
+            }
+        } else if (requestCode == REQUEST_ENABLE_GPS) {
+            LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+            boolean isGpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+            if (!isGpsEnabled) {
+                openGpsEnableSetting();
+
+            } else {
+
+            }
+        }
+    }
+
+    private void openGpsEnableSetting() {
+        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        startActivityForResult(intent, REQUEST_ENABLE_GPS);
+    }
 
     @Override
     public void onRequestPermissionsResult(int permsRequestCode, String[] permissions, int[] grantResults){
@@ -281,8 +434,6 @@ public class followupHistory_hideup extends Fragment {
             System.out.println("The output is " +remarkhideups.getText().toString());
             System.out.println("The output is " + datepickerremainder.getText().toString());
             System.out.println("The output is " + Timepickerset.getText().toString());
-            System.out.println("The output is " +latitudecrd.toString());
-            System.out.println("The output is " + longitudecrd.toString());
             System.out.println("The output is " + checkBoxChoices);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -424,9 +575,9 @@ public class followupHistory_hideup extends Fragment {
         classificationhideuparray = new String[jsonArray.length()];
         followupclssfymapper = new HashMap<String, String>();
         for(int i=0;i<jsonArray.length();i++){
-            System.out.println("stages:"+jsonArray.getJSONObject(i));
+            System.out.println("classification:"+jsonArray.getJSONObject(i));
             classificationhideuparray[i] = jsonArray.getJSONObject(i).get("name").toString();
-            followupclssfymapper.put(classificationhideuparray[i],jsonArray.getJSONObject(i).get("name").toString());
+            followupclssfymapper.put(classificationhideuparray[i],jsonArray.getJSONObject(i).get("id").toString());
             setadapterforclssfy();
         }
     }
@@ -459,7 +610,9 @@ public class followupHistory_hideup extends Fragment {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("id", clickListViewIdvstd);
-            String url = "http://texvalley.arcus.co.in/texvalleyapp/visitedby_hideup.php";
+            String url = "http://texvalley.arcus.co.in/texvalleyapp/visitedby_hideup.php?userid="+dashboard.userid
+                    +"&roleid="+dashboard.userroleid;
+            System.out.println("the status visitedby url is: " + url);
             HashMap<String, Object> params = new HashMap<String, Object>();
             params.put("url", url);
             params.put("requestmethod", "POST");
@@ -493,7 +646,7 @@ public class followupHistory_hideup extends Fragment {
         visitedbyhideuparray = new String[jsonArray.length()];
           followupusermapper = new HashMap<String, String>();
         for(int i=0;i<jsonArray.length();i++){
-            System.out.println("stages:"+jsonArray.getJSONObject(i));
+            System.out.println("visitedbyhideup:"+jsonArray.getJSONObject(i));
             visitedbyhideuparray[i] = jsonArray.getJSONObject(i).get("username").toString();
             followupusermapper.put(visitedbyhideuparray[i],jsonArray.getJSONObject(i).get("id").toString());
             setadapterforvistdhidup();

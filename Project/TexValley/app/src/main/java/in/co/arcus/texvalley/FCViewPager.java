@@ -7,7 +7,7 @@ import android.view.MotionEvent;
 
 public class FCViewPager extends ViewPager {
 
-    private boolean enabled;
+    public boolean enabled;
 
     public FCViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);

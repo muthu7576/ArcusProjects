@@ -1,11 +1,18 @@
 package in.co.arcus.texvalley;
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.PersistableBundle;
 import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
@@ -36,6 +43,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+        ImageView icon =(ImageView)findViewById(R.id.texvalleylogoimg); // Create an icon
+        icon.setImageBitmap(
+                decodeSampledBitmapFromResource(getResources(), R.drawable.texvalleyauhtoritylogo, 250, 250));
+
+
         mlogin_user = (EditText) findViewById(R.id.login_user);
         mlogin_pwd = (EditText) findViewById(R.id.login_pwd);
 
@@ -49,7 +61,93 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //network checking functions...
+
+
+    public boolean isConnected(Context context) {
+
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netinfo = cm.getActiveNetworkInfo();
+
+        if (netinfo != null && netinfo.isConnectedOrConnecting()) {
+            android.net.NetworkInfo wifi = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            android.net.NetworkInfo mobile = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+            if((mobile != null && mobile.isConnectedOrConnecting()) || (wifi != null && wifi.isConnectedOrConnecting()))
+            {
+                return true;
+            }
+        else {
+            return false;
+        }
+        } else{
+        return false;
+        }
+    }
+
+    public AlertDialog.Builder buildDialog(Context c) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(c);
+        builder.setTitle("No Internet Connection");
+        builder.setMessage("You need to have Mobile Data or wifi to access this. Press ok to Exit");
+
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                finish();
+            }
+        });
+
+        return builder;
+    }
+
+
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
+
+    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
+                                                         int reqWidth, int reqHeight) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res, resId, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeResource(res, resId, options);
+    }
+
     public void onLogin(View view) throws JSONException {
+        if(!isConnected(MainActivity.this)) {
+            buildDialog(MainActivity.this).show();
+            return;
+        }
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", mlogin_user.getText().toString());
         jsonObject.put("password", mlogin_pwd.getText().toString());
@@ -68,8 +166,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPostExecutemetod(String result) throws JSONException {
                 System.out.println("the status output is: " + result);
-                JSONObject jsonObjectsoflogin = new JSONObject(result);
+                if(result == null){
+                    toastmessage("You need to have Mobile Data or wifi to access");
+                    return;
+                }
+                else {
+                    JSONObject jsonObjectsoflogin = new JSONObject(result);
                 checkinglogin(jsonObjectsoflogin);
+                }
             }
         });
         login.execute();
@@ -78,15 +182,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkinglogin(JSONObject result) throws JSONException {
-        if ((result.getBoolean("isValid")) == true) {
+
+        if((result.getBoolean("isValid")) == true){
+            Toast.makeText(MainActivity.this,"Welcome", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(MainActivity.this, dashboard.class);
             intent.putExtra("role_id",result.getString("role_id"));
             intent.putExtra("user_id",result.getString("user_id"));
             startActivity(intent);
-        } else {
+        }
+        else {
             Toast.makeText(this, "Invalid credentials", Toast.LENGTH_LONG).show();
         }
 
+    }
+
+    public void toastmessage(String message){
+        Toast.makeText(this,message,Toast.LENGTH_LONG).show();
     }
 
 

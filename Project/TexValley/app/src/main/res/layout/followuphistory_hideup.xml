@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Mode Of Contact"
+            android:text="@string/mdeofcntct"
             android:textSize="18sp"
             android:layout_marginLeft="10dp"
             android:fontFamily="@font/avenirlight"
@@ -55,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="110dp"
-            android:text="Visited By"
+            android:text="@string/visitedby"
             android:textSize="18sp"
             android:layout_marginLeft="10dp"
             android:fontFamily="@font/avenirlight"
@@ -84,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="210dp"
-            android:text="Classification"
+            android:text="@string/classifiction"
             android:textSize="18sp"
             android:layout_marginLeft="10dp"
             android:fontFamily="@font/avenirlight"
@@ -113,7 +113,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="310dp"
-            android:text="Stage"
+            android:text="@string/stagefollwup"
             android:textSize="18sp"
             android:layout_marginLeft="10dp"
             android:fontFamily="@font/avenirlight"
@@ -142,7 +142,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="410dp"
-            android:text="Remark"
+            android:text="@string/remarkfllw"
             android:textSize="18sp"
             android:layout_marginLeft="10dp"
             android:fontFamily="@font/avenirlight"
@@ -182,7 +182,7 @@
                 android:id="@+id/cus_followupdatehide"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Next Schedule Date &amp; Time"
+                android:text="@string/nxtdteandtimescdle"
                 android:textColor="#000"
                 >
 
@@ -198,7 +198,8 @@
                 android:layout_marginLeft="10dp"
                 android:backgroundTintMode="add"
                 android:id="@+id/date_time_setterhide"
-                android:text="Set Date"
+                android:hint="Set Date"
+                android:textColorHint="#000"
                 android:textSize="17sp" />
 
 
@@ -248,7 +249,8 @@
 
                 android:layout_marginTop="20dp"
                 android:inputType="text"
-                android:text="Set Time"
+                android:hint="Set Time"
+                android:textColorHint="#000"
                 android:textColor="#000"
                 android:textSize="17sp"/>
             <ImageView

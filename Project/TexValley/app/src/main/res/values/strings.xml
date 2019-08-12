@@ -45,7 +45,27 @@
     <string name="user_name">Customer Name <font color='red'>*</font></string>
     <string name="email">E-mail <font color='red'>*</font></string>
     <string name="area">Area <font color='red'>*</font></string>
+    <string name="types">Type <font color='red'>*</font></string>
     <string name="opptyname">Oppurtunity Name <font color='red'>*</font></string>
     <string name="expctddate">Expected Close date <font color='red'>*</font></string>
+    <string name="classification">Classification <font color='red'>*</font></string>
+    <string name="stage">Stage <font color='red'>*</font></string>
+    <string name="createdate">Create Date <font color='red'>*</font></string>
+    <string name="enquiry">Enquiry <font color='red'>*</font></string>
+    <string name="leadsource">Lead Source <font color='red'>*</font></string>
     <string name="value">Value <font color='red'>*</font></string>
+
+    <string name="fllwdescptn">Description <font color='red'>*</font></string>
+    <string name="assignto">Assign To <font color='red'>*</font></string>
+    <string name="nxtschdlddte">Next Schedule Date &amp; Time <font color='red'>*</font></string>
+
+    <string name="mdeofcntct">Mode Of Contact <font color='red'>*</font></string>
+    <string name="visitedby">Visited By <font color='red'>*</font></string>
+    <string name="classifiction">Classification <font color='red'>*</font></string>
+    <string name="stagefollwup">Stage <font color='red'>*</font></string>
+    <string name="remarkfllw">Remark <font color='red'>*</font></string>
+    <string name="nxtdteandtimescdle">Next Schedule Date &amp; Time <font color='red'>*</font></string>
+
+
+
 </resources>
